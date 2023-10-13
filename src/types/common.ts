@@ -28,7 +28,7 @@ export interface Name {
 
 export interface IUser {
   id: string;
-  name: Name;
+  name: string;
   email: string;
   role: string;
   createdAt: string;

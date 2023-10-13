@@ -79,7 +79,7 @@ const ManageUserPage = () => {
       render: function (data: any) {
         return (
           <>
-            <Link href={`/super_admin/user/edit/${data.id}`}>
+            <Link href={`/super_admin/user/edit/${data}`}>
               <Button
                 style={{
                   margin: "0px 5px",
