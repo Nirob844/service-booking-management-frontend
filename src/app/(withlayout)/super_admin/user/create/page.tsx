@@ -11,7 +11,7 @@ import { Button, Col, Row, message } from "antd";
 const CreateUserPage = () => {
   const [userRegistration] = useUserRegistrationMutation();
   const onSubmit = async (data: any) => {
-    console.log(data);
+    message.loading("creating.............");
     try {
       const res = await userRegistration({ ...data }).unwrap();
       console.log(res);

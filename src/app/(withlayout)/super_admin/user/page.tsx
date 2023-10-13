@@ -2,6 +2,7 @@
 import ActionBar from "@/components/ui/ActionBar";
 import UMBreadCrumb from "@/components/ui/BreadCrumb";
 import UMTable from "@/components/ui/Table";
+import UMModal from "@/components/ui/UMModal";
 import { useDeleteUserMutation, useUsersQuery } from "@/redux/api/userApi";
 import { useDebounced } from "@/redux/hooks";
 import {
@@ -21,6 +22,8 @@ const ManageUserPage = () => {
   const [sortBy, setSortBy] = useState<string>("");
   const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
+  const [open, setOpen] = useState<boolean>(false);
+  const [userId, setUserId] = useState<string>("");
 
   query["limit"] = size;
   query["page"] = page;
@@ -45,7 +48,10 @@ const ManageUserPage = () => {
     message.loading("Deleting.....");
     try {
       const res = await deleteUser(id);
-      message.success("User delete successfully");
+      if (!!res) {
+        message.success("User delete successfully");
+        setOpen(false);
+      }
     } catch (err: any) {
       //   console.error(err.message);
       message.error(err.message);
@@ -90,7 +96,15 @@ const ManageUserPage = () => {
                 <EditOutlined />
               </Button>
             </Link>
-            <Button onClick={() => console.log(data)} type="primary" danger>
+            <Button
+              type="primary"
+              onClick={() => {
+                setOpen(true);
+                setUserId(data);
+              }}
+              danger
+              style={{ marginLeft: "3px" }}
+            >
               <DeleteOutlined />
             </Button>
           </>
@@ -163,6 +177,14 @@ const ManageUserPage = () => {
         onTableChange={onTableChange}
         showPagination={true}
       />
+      <UMModal
+        title="Remove admin"
+        isOpen={open}
+        closeModal={() => setOpen(false)}
+        handleOk={() => deleteHandler(userId)}
+      >
+        <p className="my-5">Do you want to remove this admin?</p>
+      </UMModal>
     </div>
   );
 };
