@@ -12,6 +12,16 @@ export const genderOption = [
     value: "others",
   },
 ];
+export const userOption = [
+  {
+    label: "admin",
+    value: "admin",
+  },
+  {
+    label: "customer",
+    value: "customer",
+  },
+];
 export const bloodGroupOptions = [
   {
     label: "A+",
