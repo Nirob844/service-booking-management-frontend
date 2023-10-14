@@ -24,7 +24,7 @@ const LoginPage = () => {
       const res = await userLogin({ ...data }).unwrap();
       console.log(res);
       if (res.accessToken) {
-        router.push("/profile");
+        router.push("/");
         message.success("User logged in successfully");
       }
       storeUserInfo({ accessToken: res?.accessToken });

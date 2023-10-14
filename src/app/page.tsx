@@ -1,7 +1,12 @@
-import { redirect } from "next/navigation";
+import PublicHeader from "@/components/view/PublicHeader";
 
 const HomePage = () => {
-  return redirect("/profile");
+  return (
+    <div>
+      <PublicHeader />
+      <h1 className="text-red-600">this is home page</h1>
+    </div>
+  );
 };
 
 export default HomePage;
