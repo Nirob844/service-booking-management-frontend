@@ -1,5 +1,7 @@
 "use client";
 import { authKey } from "@/constants/storageKey";
+import { useAppDispatch } from "@/redux/hooks";
+import { showSidebarDrawer } from "@/redux/slice/sidebarSlice";
 import { getUserInfo, removeUserInfo } from "@/services/auth.service";
 import { MenuOutlined } from "@ant-design/icons";
 import { Button, Drawer, Layout, Menu, Typography } from "antd";
@@ -29,19 +31,28 @@ const Navbar = ({
     setOpen(false);
   };
 
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const logOut = () => {
     removeUserInfo(authKey);
     router.push("/login");
   };
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
   return (
     <Layout className="layout">
       <Header className="flex items-center">
         {hasSider && (
-          <Button type="primary" className="lg:hidden" onClick={() => {}}>
+          <Button
+            type="primary"
+            className="lg:hidden"
+            onClick={() => {
+              dispatch(showSidebarDrawer());
+            }}
+          >
             <MenuOutlined />
           </Button>
         )}
@@ -93,7 +104,7 @@ const Navbar = ({
         <Button type="primary" className="lg:hidden" onClick={showDrawer}>
           <MenuOutlined />
         </Button>
-        <Drawer title="Menu" placement="right" onClose={onClose}>
+        <Drawer title="Menu" placement="right" onClose={onClose} visible={open}>
           <Menu
             theme="light"
             mode="vertical"

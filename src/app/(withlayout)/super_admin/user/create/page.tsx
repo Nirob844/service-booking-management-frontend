@@ -7,12 +7,28 @@ import UploadImage from "@/components/ui/uploadImage";
 import { userOption } from "@/constants/global";
 import { useUserRegistrationMutation } from "@/redux/api/authApi";
 import { Button, Col, Row, message } from "antd";
+import axios from "axios";
 
 const CreateUserPage = () => {
   const [userRegistration] = useUserRegistrationMutation();
+
   const onSubmit = async (data: any) => {
     message.loading("creating.............");
+    console.log(data);
     try {
+      const formData = new FormData();
+      formData.append("image", data.image[0]);
+      console.log(formData);
+      formData.append("key", "48205bb1e9d5edb8bc197ab3a6951a4b"); // Replace with your ImageBB API key
+      const response = await axios.post(
+        "https://api.imgbb.com/1/upload",
+        formData
+      );
+      const imageUrl = response.data.data.url;
+
+      // Add the image URL to the data object
+      data.image = imageUrl;
+      console.log(data);
       const res = await userRegistration({ ...data }).unwrap();
       console.log(res);
       if (res.id) {
@@ -90,6 +106,20 @@ const CreateUserPage = () => {
                   type="password"
                   name="password"
                   label="Password"
+                  size="large"
+                />
+              </Col>
+              <Col
+                className="gutter-row"
+                span={8}
+                style={{
+                  marginBottom: "10px",
+                }}
+              >
+                <FormInput
+                  type="file"
+                  name="image"
+                  label="Image"
                   size="large"
                 />
               </Col>

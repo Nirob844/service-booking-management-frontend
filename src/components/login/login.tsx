@@ -22,13 +22,14 @@ const LoginPage = () => {
     console.log("not", data);
     try {
       const res = await userLogin({ ...data }).unwrap();
-      console.log(res);
       if (res.accessToken) {
         router.push("/");
         message.success("User logged in successfully");
       }
       storeUserInfo({ accessToken: res?.accessToken });
-    } catch (error) {}
+    } catch (error: any) {
+      message.error(error.message);
+    }
   };
   return (
     <Row
