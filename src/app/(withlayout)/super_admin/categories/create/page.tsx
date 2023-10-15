@@ -1,15 +1,13 @@
 "use client";
 import Form from "@/components/Forms/Form";
 import FormInput from "@/components/Forms/FormInput";
-import FormSelectField from "@/components/Forms/FormSelectField";
 import UmBreadCrumb from "@/components/ui/BreadCrumb";
-import { userOption } from "@/constants/global";
-import { useUserRegistrationMutation } from "@/redux/api/authApi";
+import { useAddCategoryMutation } from "@/redux/api/categoryApi";
 import { Button, Col, Row, message } from "antd";
 import axios from "axios";
 
-const CreateUserPage = () => {
-  const [userRegistration] = useUserRegistrationMutation();
+const CreateCategoryPage = () => {
+  const [addCategory] = useAddCategoryMutation();
 
   const onSubmit = async (data: any) => {
     message.loading("creating.............");
@@ -28,10 +26,10 @@ const CreateUserPage = () => {
       // Add the image URL to the data object
       data.image = imageUrl;
       console.log(data);
-      const res = await userRegistration({ ...data }).unwrap();
+      const res = await addCategory({ ...data }).unwrap();
       console.log(res);
       if (res.id) {
-        message.success("User registration in successfully");
+        message.success(" create category in successfully");
       }
     } catch (err: any) {
       message.error(err.message);
@@ -46,12 +44,12 @@ const CreateUserPage = () => {
             link: "/super_admin",
           },
           {
-            label: "user",
-            link: "/super_admin/user",
+            label: "categories",
+            link: "/super_admin/categories",
           },
         ]}
       />
-      <h1>create new user</h1>
+      <h1 className="my-5">create new category</h1>
       <div>
         <Form submitHandler={onSubmit}>
           <div
@@ -68,7 +66,7 @@ const CreateUserPage = () => {
                 marginBottom: "10px",
               }}
             >
-              User Information
+              Category Information
             </p>
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
               <Col
@@ -78,36 +76,14 @@ const CreateUserPage = () => {
                   marginBottom: "10px",
                 }}
               >
-                <FormInput type="text" name="name" label="Name" size="large" />
-              </Col>
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
                 <FormInput
-                  type="email"
-                  name="email"
-                  label="Email"
+                  type="text"
+                  name="title"
+                  label="Title"
                   size="large"
                 />
               </Col>
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <FormInput
-                  type="password"
-                  name="password"
-                  label="Password"
-                  size="large"
-                />
-              </Col>
+
               <Col
                 className="gutter-row"
                 span={8}
@@ -122,21 +98,6 @@ const CreateUserPage = () => {
                   size="large"
                 />
               </Col>
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <FormSelectField
-                  options={userOption}
-                  size="large"
-                  name="role"
-                  label="Role"
-                  placeholder="Select"
-                />
-              </Col>
             </Row>
           </div>
 
@@ -149,4 +110,4 @@ const CreateUserPage = () => {
   );
 };
 
-export default CreateUserPage;
+export default CreateCategoryPage;

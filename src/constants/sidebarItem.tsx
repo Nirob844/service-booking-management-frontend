@@ -1,4 +1,8 @@
-import { ProfileOutlined, TableOutlined } from "@ant-design/icons";
+import {
+  AppstoreOutlined,
+  ProfileOutlined,
+  TableOutlined,
+} from "@ant-design/icons";
 import { MenuProps } from "antd";
 import Link from "next/link";
 import { USER_ROLE } from "./role";
@@ -114,17 +118,21 @@ export const sidebarItem = (role: string) => {
       icon: <TableOutlined />,
       key: `/${role}/user`,
     },
-    // {
-    //   label: "Management",
-    //   key: "management",
-    //   icon: <AppstoreOutlined />,
-    //   children: [
-    //     {
-    //       label: <Link href={`/${role}/department`}>Department</Link>,
-    //       key: `/${role}/department`,
-    //     },
-    //   ],
-    // },
+    {
+      label: "Management",
+      key: "management",
+      icon: <AppstoreOutlined />,
+      children: [
+        {
+          label: <Link href={`/${role}/categories`}>Manage Category</Link>,
+          key: `/${role}/categories`,
+        },
+        {
+          label: <Link href={`/${role}/services`}>Manage Service</Link>,
+          key: `/${role}/services`,
+        },
+      ],
+    },
   ];
 
   if (role === USER_ROLE.SUPER_ADMIN) return superAdminSidebarItems;

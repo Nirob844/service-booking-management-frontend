@@ -81,6 +81,7 @@ const FormInput = ({
     return (
       <>
         {label && <label>{label}</label>}
+        <br />
         <Controller
           name={name}
           control={control}
