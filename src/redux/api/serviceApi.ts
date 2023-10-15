@@ -31,6 +31,15 @@ export const serviceApi = baseApi.injectEndpoints({
       providesTags: [tagTypes.service],
     }),
 
+    addService: build.mutation({
+      query: (Data) => ({
+        url: `${SERVICE_URL}/create-service`,
+        method: "POST",
+        data: Data,
+      }),
+      invalidatesTags: [tagTypes.service],
+    }),
+
     updateService: build.mutation({
       query: (data) => ({
         url: `${SERVICE_URL}/${data.id}`,
@@ -53,6 +62,7 @@ export const serviceApi = baseApi.injectEndpoints({
 export const {
   useServicesQuery,
   useServiceQuery,
+  useAddServiceMutation,
   useUpdateServiceMutation,
   useDeleteServiceMutation,
 } = serviceApi;

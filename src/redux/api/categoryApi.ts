@@ -32,10 +32,10 @@ export const categoryApi = baseApi.injectEndpoints({
     }),
 
     addCategory: build.mutation({
-      query: (loginData) => ({
+      query: (Data) => ({
         url: `${CATEGORY_URL}/create-category`,
         method: "POST",
-        data: loginData,
+        data: Data,
       }),
       invalidatesTags: [tagTypes.category],
     }),

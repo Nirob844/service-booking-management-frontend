@@ -52,7 +52,7 @@ const CategoriesPage = () => {
     try {
       const res = await deleteCategory(id);
       if (!!res) {
-        message.success("User delete successfully");
+        message.success("Category delete successfully");
         setOpen(false);
       }
     } catch (err: any) {
