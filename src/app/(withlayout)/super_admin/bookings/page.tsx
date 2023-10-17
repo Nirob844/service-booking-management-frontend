@@ -4,15 +4,11 @@ import UMBreadCrumb from "@/components/ui/BreadCrumb";
 import UMTable from "@/components/ui/Table";
 import UMModal from "@/components/ui/UMModal";
 import {
-  useCategoriesQuery,
-  useDeleteCategoryMutation,
-} from "@/redux/api/categoryApi";
+  useBookingsQuery,
+  useDeleteBookingMutation,
+} from "@/redux/api/bookingApi";
 import { useDebounced } from "@/redux/hooks";
-import {
-  DeleteOutlined,
-  EditOutlined,
-  ReloadOutlined,
-} from "@ant-design/icons";
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { Button, Input, message } from "antd";
 import dayjs from "dayjs";
 import Link from "next/link";
@@ -41,24 +37,28 @@ const CategoriesPage = () => {
   if (!!debouncedSearchTerm) {
     query["searchTerm"] = debouncedSearchTerm;
   }
-  const { data, isLoading } = useCategoriesQuery({
+  const { data, isLoading } = useBookingsQuery({
     ...query,
     include: {
       user: true,
-      service: true,
+      bookingServices: {
+        include: {
+          service: true,
+        },
+      },
     },
   });
 
-  const categories = data?.categories;
+  const bookings = data?.bookings;
   const meta = data?.meta;
 
-  const [deleteCategory] = useDeleteCategoryMutation();
+  const [deleteBooking] = useDeleteBookingMutation();
   const deleteHandler = async (id: string) => {
     message.loading("Deleting.....");
     try {
-      const res = await deleteCategory(id);
+      const res = await deleteBooking(id);
       if (!!res) {
-        message.success("Category delete successfully");
+        message.success("Booking delete successfully");
         setOpen(false);
       }
     } catch (err: any) {
@@ -69,8 +69,16 @@ const CategoriesPage = () => {
 
   const columns = [
     {
-      title: "Title",
-      dataIndex: "title",
+      title: "User Name",
+      dataIndex: ["user", "name"],
+    },
+    {
+      title: "Service Title",
+      dataIndex: ["bookingServices", 0, "service", "title"],
+    },
+    {
+      title: "Status",
+      dataIndex: "status",
     },
     {
       title: "Created at",
@@ -86,7 +94,7 @@ const CategoriesPage = () => {
       render: function (data: any) {
         return (
           <>
-            <Link href={`/super_admin/categories/edit/${data}`}>
+            <Link href={`/super_admin/bookings/edit/${data}`}>
               <Button
                 style={{
                   margin: "0px 5px",
@@ -143,7 +151,7 @@ const CategoriesPage = () => {
         ]}
       />
 
-      <ActionBar title="Category  list">
+      <ActionBar title="Booking  list">
         <Input
           size="large"
           placeholder="Search"
@@ -152,25 +160,11 @@ const CategoriesPage = () => {
             width: "20%",
           }}
         />
-        <div>
-          <Link href="/super_admin/categories/create">
-            <Button type="primary">Create New</Button>
-          </Link>
-          {(!!sortBy || !!sortOrder || !!searchTerm) && (
-            <Button
-              style={{ margin: "0px 5px" }}
-              type="primary"
-              onClick={resetFilters}
-            >
-              <ReloadOutlined />
-            </Button>
-          )}
-        </div>
       </ActionBar>
       <UMTable
         loading={isLoading}
         columns={columns}
-        dataSource={categories}
+        dataSource={bookings}
         pageSize={size}
         totalPages={meta?.total}
         showSizeChanger={true}
@@ -179,12 +173,12 @@ const CategoriesPage = () => {
         showPagination={true}
       />
       <UMModal
-        title="Remove category"
+        title="Remove Booking"
         isOpen={open}
         closeModal={() => setOpen(false)}
         handleOk={() => deleteHandler(userId)}
       >
-        <p className="my-5">Do you want to remove this category?</p>
+        <p className="my-5">Do you want to remove this booking?</p>
       </UMModal>
     </div>
   );

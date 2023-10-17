@@ -22,7 +22,7 @@ const BookingModal: React.FC<BookingModalProps> = ({
 
   return (
     <Modal title={title} visible={visible} onOk={onOk} onCancel={onCancel}>
-      <p>title:{title}</p>
+      <h3 className="mb-2">Service Name : {title}</h3>
       <DatePicker onChange={handleDateChange} />
     </Modal>
   );

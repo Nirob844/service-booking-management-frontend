@@ -9,7 +9,7 @@ import {
 import { Button, Col, Row, message } from "antd";
 import axios from "axios";
 
-const UserEditPage = ({ params }: any) => {
+const CategoryEditPage = ({ params }: any) => {
   const { data: categoryData, isLoading: loading } = useCategoryQuery(
     params?.id
   );
@@ -120,4 +120,4 @@ const UserEditPage = ({ params }: any) => {
   );
 };
 
-export default UserEditPage;
+export default CategoryEditPage;

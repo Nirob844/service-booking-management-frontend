@@ -30,7 +30,7 @@ const ServiceCard = ({ service }: any) => {
           ? [
               {
                 serviceId: service.id,
-                bookingDate: bookingDate.toISOString(),
+                bookingDate: bookingDate,
               },
             ]
           : [],
@@ -51,7 +51,7 @@ const ServiceCard = ({ service }: any) => {
     setIsModalVisible(false);
   };
 
-  const handleDateChange = (date) => {
+  const handleDateChange = (date: any) => {
     setBookingDate(date); // No need for toDate() here
   };
 
@@ -96,7 +96,7 @@ const ServiceCard = ({ service }: any) => {
             Booking
           </Button>
           <BookingModal
-            title={service.title}
+            title="Booking Model"
             visible={isModalVisible}
             onOk={handleOk}
             onCancel={handleCancel}

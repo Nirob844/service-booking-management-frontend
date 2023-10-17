@@ -22,6 +22,21 @@ export const userOption = [
     value: "customer",
   },
 ];
+
+export const bookingOption = [
+  {
+    label: "Pending",
+    value: "Pending",
+  },
+  {
+    label: "Accepted",
+    value: "Accepted",
+  },
+  {
+    label: "Cancelled",
+    value: "Cancelled",
+  },
+];
 export const bloodGroupOptions = [
   {
     label: "A+",

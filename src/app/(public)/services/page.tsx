@@ -1,4 +1,5 @@
 "use client";
+import Loading from "@/app/loading";
 import Card from "@/components/ui/Card";
 import SBPagination from "@/components/ui/Pagination";
 import { useCategoriesQuery } from "@/redux/api/categoryApi";
@@ -61,12 +62,10 @@ const ServicesPage = () => {
               />
             </div>
 
-            <div className="mt-[20px] mb-[100px]">
+            <div>
               {isLoading ? (
                 <div>
-                  <h3 className="text-3xl font-[500] text-center">
-                    Loading...
-                  </h3>
+                  <Loading />
                 </div>
               ) : (
                 <div className="grid grid-cols-3 gap-x-10 gap-y-10">

@@ -45,11 +45,11 @@ const Header = () => {
           {role}
         </p>
         <Dropdown menu={{ items }}>
-          <a>
+          <p>
             <Space wrap size={16}>
               <Avatar size="large" icon={<UserOutlined />} />
             </Space>
-          </a>
+          </p>
         </Dropdown>
       </Row>
     </AntHeader>
