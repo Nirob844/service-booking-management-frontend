@@ -2,21 +2,25 @@
 import Form from "@/components/Forms/Form";
 import FormInput from "@/components/Forms/FormInput";
 import UmBreadCrumb from "@/components/ui/BreadCrumb";
-import UploadImage from "@/components/ui/uploadImage";
-import { useUpdateProfileMutation } from "@/redux/api/profileApi";
-import { useUserQuery } from "@/redux/api/userApi";
+import {
+  useCategoryQuery,
+  useUpdateCategoryMutation,
+} from "@/redux/api/categoryApi";
 import { Button, Col, Row, message } from "antd";
 
-const EditProfilePage = ({ params }: any) => {
-  const { data: userData } = useUserQuery(params?.id);
-  const [updateProfile] = useUpdateProfileMutation();
+const CategoryEditPage = ({ params }: any) => {
+  const { data: categoryData, isLoading: loading } = useCategoryQuery(
+    params?.id
+  );
+  console.log(categoryData);
+  const [updateCategory] = useUpdateCategoryMutation();
   const onSubmit = async (data: any) => {
     message.loading("updating........");
     try {
-      const res = await updateProfile({ body: data }).unwrap();
+      const res = await updateCategory({ id: params?.id, body: data }).unwrap();
       console.log(res);
       if (res.id) {
-        message.success("Profile update in successfully");
+        message.success("Category update in successfully");
       }
     } catch (err: any) {
       message.error(err.message);
@@ -24,9 +28,7 @@ const EditProfilePage = ({ params }: any) => {
   };
 
   const defaultValues = {
-    name: userData?.name || "",
-    email: userData?.email || "",
-    role: userData?.role || "",
+    title: categoryData?.title || "",
   };
 
   return (
@@ -34,16 +36,16 @@ const EditProfilePage = ({ params }: any) => {
       <UmBreadCrumb
         items={[
           {
-            label: "Home",
-            link: "/",
+            label: "admin",
+            link: "/admin",
           },
           {
-            label: "profile",
-            link: "/profile",
+            label: "categories",
+            link: "/admin/categories",
           },
         ]}
       />
-      <h1>create new user</h1>
+      <h1>update new category</h1>
       <div>
         <Form submitHandler={onSubmit} defaultValues={defaultValues}>
           <div
@@ -70,19 +72,10 @@ const EditProfilePage = ({ params }: any) => {
                   marginBottom: "10px",
                 }}
               >
-                <FormInput type="text" name="name" label="Name" size="large" />
-              </Col>
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
                 <FormInput
-                  type="email"
-                  name="email"
-                  label="Email"
+                  type="text"
+                  name="title"
+                  label="Title"
                   size="large"
                 />
               </Col>
@@ -94,7 +87,12 @@ const EditProfilePage = ({ params }: any) => {
                   marginBottom: "10px",
                 }}
               >
-                <UploadImage />
+                <FormInput
+                  type="file"
+                  name="image"
+                  label="Image"
+                  size="large"
+                />
               </Col>
             </Row>
           </div>
@@ -108,4 +106,4 @@ const EditProfilePage = ({ params }: any) => {
   );
 };
 
-export default EditProfilePage;
+export default CategoryEditPage;

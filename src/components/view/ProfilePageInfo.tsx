@@ -27,7 +27,7 @@ const ProfilePageInfo = () => {
           <h3>Email:{data?.email}</h3>
         </div>
         <div className="mt-3">
-          <Link href={`/${role}/edit/${userId}`}>
+          <Link href={`/profile/edit/${userId}`}>
             <Button
               style={{
                 margin: "0px 5px",
