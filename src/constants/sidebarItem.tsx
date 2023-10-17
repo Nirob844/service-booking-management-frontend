@@ -22,13 +22,13 @@ export const sidebarItem = (role: string) => {
     },
   ];
 
-  // const commonAdminSidebarItems: MenuProps["items"] = [
-  //   {
-  //     label: <Link href={`/${role}/manage-user`}>Manage User</Link>,
-  //     icon: <TableOutlined />,
-  //     key: `/${role}/manage-user`,
-  //   },
-  // ];
+  const customerSidebarItems: MenuProps["items"] = [
+    ...defaultSidebarItems,
+    {
+      label: <Link href={`/${role}/bookings`}>Booking</Link>,
+      key: `/${role}/bookings`,
+    },
+  ];
 
   const adminSidebarItems: MenuProps["items"] = [
     ...defaultSidebarItems,
@@ -60,36 +60,36 @@ export const sidebarItem = (role: string) => {
 
   const superAdminSidebarItems: MenuProps["items"] = [
     ...defaultSidebarItems,
-    ...adminSidebarItems,
 
-    // {
-    //   label: <Link href={`/${role}/user`}>Manage User</Link>,
-    //   icon: <TableOutlined />,
-    //   key: `/${role}/user`,
-    // },
-    // {
-    //   label: "Management",
-    //   key: "management",
-    //   icon: <AppstoreOutlined />,
-    //   children: [
-    //     {
-    //       label: <Link href={`/${role}/categories`}>Manage Category</Link>,
-    //       key: `/${role}/categories`,
-    //     },
-    //     {
-    //       label: <Link href={`/${role}/services`}>Manage Service</Link>,
-    //       key: `/${role}/services`,
-    //     },
-    //     {
-    //       label: <Link href={`/${role}/bookings`}>Manage Booking</Link>,
-    //       key: `/${role}/bookings`,
-    //     },
-    //   ],
-    // },
+    {
+      label: <Link href={`/${role}/user`}>Manage User</Link>,
+      icon: <TableOutlined />,
+      key: `/${role}/user`,
+    },
+    {
+      label: "Management",
+      key: "management",
+      icon: <AppstoreOutlined />,
+      children: [
+        {
+          label: <Link href={`/${role}/categories`}>Manage Category</Link>,
+          key: `/${role}/categories`,
+        },
+        {
+          label: <Link href={`/${role}/services`}>Manage Service</Link>,
+          key: `/${role}/services`,
+        },
+        {
+          label: <Link href={`/${role}/bookings`}>Manage Booking</Link>,
+          key: `/${role}/bookings`,
+        },
+      ],
+    },
   ];
 
   if (role === USER_ROLE.SUPER_ADMIN) return superAdminSidebarItems;
   else if (role === USER_ROLE.ADMIN) return adminSidebarItems;
+  else if (role === USER_ROLE.CUSTOMER) return customerSidebarItems;
   else {
     return defaultSidebarItems;
   }

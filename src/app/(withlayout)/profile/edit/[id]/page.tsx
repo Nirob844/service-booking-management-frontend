@@ -28,7 +28,6 @@ const EditProfilePage = () => {
   const defaultValues = {
     name: userData?.name || "",
     email: userData?.email || "",
-    role: userData?.role || "",
   };
 
   return (
