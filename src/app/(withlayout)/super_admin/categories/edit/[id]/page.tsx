@@ -7,6 +7,7 @@ import {
   useUpdateCategoryMutation,
 } from "@/redux/api/categoryApi";
 import { Button, Col, Row, message } from "antd";
+import axios from "axios";
 
 const UserEditPage = ({ params }: any) => {
   const { data: categoryData, isLoading: loading } = useCategoryQuery(
@@ -17,6 +18,19 @@ const UserEditPage = ({ params }: any) => {
   const onSubmit = async (data: any) => {
     message.loading("updating........");
     try {
+      const formData = new FormData();
+      formData?.append("image", data.image[0]);
+      console.log(formData);
+      formData?.append("key", "48205bb1e9d5edb8bc197ab3a6951a4b"); // Replace with your ImageBB API key
+      const response = await axios.post(
+        "https://api.imgbb.com/1/upload",
+        formData
+      );
+      const imageUrl = response?.data?.data?.url;
+
+      // Add the image URL to the data object
+      data.image = imageUrl;
+
       const res = await updateCategory({ id: params?.id, body: data }).unwrap();
       console.log(res);
       if (res.id) {
