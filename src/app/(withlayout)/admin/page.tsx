@@ -1,7 +1,9 @@
+import ProfilePageInfo from "@/components/view/ProfilePageInfo";
+
 const AdminPage = () => {
   return (
     <div>
-      <h1>this is admin page</h1>
+      <ProfilePageInfo />
     </div>
   );
 };
