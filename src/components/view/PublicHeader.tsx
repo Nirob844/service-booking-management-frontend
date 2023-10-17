@@ -1,6 +1,9 @@
+import { getUserInfo } from "@/services/auth.service";
 import Navbar from "../ui/Navbar";
 
 const PublicHeader = () => {
+  const { role } = getUserInfo() as any;
+  console.log(role);
   const items = [
     { key: "1", label: "Home", href: "/" },
     { key: "2", label: "Services", href: "/services" },

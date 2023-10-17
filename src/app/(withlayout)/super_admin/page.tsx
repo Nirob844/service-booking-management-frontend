@@ -1,7 +1,9 @@
+import ProfilePageInfo from "@/components/view/ProfilePageInfo";
+
 const SuperAdmin = () => {
   return (
     <div>
-      <h1>this is super admin page</h1>
+      <ProfilePageInfo />
     </div>
   );
 };
