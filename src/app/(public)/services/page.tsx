@@ -4,10 +4,8 @@ import Card from "@/components/ui/Card";
 import SBPagination from "@/components/ui/Pagination";
 import { useCategoriesQuery } from "@/redux/api/categoryApi";
 import { useServicesQuery } from "@/redux/api/serviceApi";
-import { Button, Col, Input, Row, Select } from "antd";
+import { Button, Col, Input, Row } from "antd";
 import { useState } from "react";
-
-const { Option } = Select;
 
 const ServicesPage = () => {
   const [page, setPage] = useState(1);

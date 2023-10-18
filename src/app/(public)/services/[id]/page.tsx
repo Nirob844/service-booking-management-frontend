@@ -1,6 +1,7 @@
 "use client";
 import Loading from "@/app/loading";
 import BookingModal from "@/components/ui/BookingModal";
+import { useAddAddCartMutation } from "@/redux/api/addCartApi";
 import { useAddBookingMutation } from "@/redux/api/bookingApi";
 import {
   useAddReviewAndRatingMutation,
@@ -35,6 +36,7 @@ const ServiceDetailsPage = ({ params }: any) => {
   const { data, isLoading } = useServiceQuery(id);
   const [addBooking] = useAddBookingMutation();
   const [addReviewAndRating] = useAddReviewAndRatingMutation();
+  const [addCart] = useAddAddCartMutation();
 
   const { data: reviewsAndRatings, isLoading: reviewLoading } =
     useReviewAndRatingServiceIdQuery(id);
@@ -102,6 +104,28 @@ const ServiceDetailsPage = ({ params }: any) => {
   const handleReviewChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     console.log(e.target.value);
     setReview(e.target.value);
+  };
+
+  const handleAddToCart = async () => {
+    try {
+      const { userId } = getUserInfo() as any;
+      // Assuming you have a service object. Modify this accordingly.
+      const serviceToAddToCart = {
+        serviceId: service.id,
+        userId: userId, // You can modify this as needed.
+      };
+
+      const res = await addCart(serviceToAddToCart).unwrap();
+
+      if (res.id) {
+        message.success("Service added to cart successfully.");
+      } else {
+        message.error("Failed to add service to cart.");
+      }
+    } catch (err) {
+      console.error("Error adding to cart:", err);
+      message.error("An error occurred while adding to cart.");
+    }
   };
 
   const handleReviewSubmit = async () => {
@@ -180,7 +204,7 @@ const ServiceDetailsPage = ({ params }: any) => {
                     />
                   </div>
                   <div className="ml-3">
-                    <Button>Add to Card</Button>
+                    <Button onClick={handleAddToCart}>Add to Cart</Button>
                   </div>
                 </div>
               </div>
