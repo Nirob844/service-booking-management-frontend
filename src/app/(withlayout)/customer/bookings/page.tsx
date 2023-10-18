@@ -2,13 +2,11 @@
 import ActionBar from "@/components/ui/ActionBar";
 import UMBreadCrumb from "@/components/ui/BreadCrumb";
 import UMTable from "@/components/ui/Table";
-import UMModal from "@/components/ui/UMModal";
 import {
   useBookingsQuery,
-  useDeleteBookingMutation,
+  useUpdateBookingMutation,
 } from "@/redux/api/bookingApi";
 import { useDebounced } from "@/redux/hooks";
-import { DeleteOutlined } from "@ant-design/icons";
 import { Button, Input, message } from "antd";
 import dayjs from "dayjs";
 import { useState } from "react";
@@ -20,8 +18,6 @@ const CategoriesPage = () => {
   const [sortBy, setSortBy] = useState<string>("");
   const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const [open, setOpen] = useState<boolean>(false);
-  const [userId, setUserId] = useState<string>("");
 
   query["limit"] = size;
   query["page"] = page;
@@ -50,18 +46,20 @@ const CategoriesPage = () => {
 
   const bookings = data?.bookings;
   const meta = data?.meta;
-
-  const [deleteBooking] = useDeleteBookingMutation();
-  const deleteHandler = async (id: string) => {
-    message.loading("Deleting.....");
+  const [updateBooking] = useUpdateBookingMutation();
+  const EditHandler = async (id: string) => {
+    message.loading("Cancelling booking...");
     try {
-      const res = await deleteBooking(id);
-      if (!!res) {
-        message.success("Booking delete successfully");
-        setOpen(false);
+      const updatedBooking = {
+        status: "Cancelled",
+      };
+
+      const res = await updateBooking({ id, body: updatedBooking });
+
+      if (res) {
+        message.success("Booking cancelled successfully");
       }
     } catch (err: any) {
-      //   console.error(err.message);
       message.error(err.message);
     }
   };
@@ -90,19 +88,16 @@ const CategoriesPage = () => {
     {
       title: "Action",
       dataIndex: "id",
-      render: function (data: any) {
+      render: function (id: any) {
         return (
           <>
             <Button
               type="primary"
-              onClick={() => {
-                setOpen(true);
-                setUserId(data);
-              }}
+              onClick={() => EditHandler(id)}
               danger
               style={{ marginLeft: "3px" }}
             >
-              <DeleteOutlined />
+              cancel booking
             </Button>
           </>
         );
@@ -120,12 +115,6 @@ const CategoriesPage = () => {
     // console.log(order, field);
     setSortBy(field as string);
     setSortOrder(order === "ascend" ? "asc" : "desc");
-  };
-
-  const resetFilters = () => {
-    setSortBy("");
-    setSortOrder("");
-    setSearchTerm("");
   };
 
   return (
@@ -160,14 +149,6 @@ const CategoriesPage = () => {
         onTableChange={onTableChange}
         showPagination={true}
       />
-      <UMModal
-        title="Remove Booking"
-        isOpen={open}
-        closeModal={() => setOpen(false)}
-        handleOk={() => deleteHandler(userId)}
-      >
-        <p className="my-5">Do you want to remove this booking?</p>
-      </UMModal>
     </div>
   );
 };

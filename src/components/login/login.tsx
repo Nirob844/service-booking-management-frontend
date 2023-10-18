@@ -2,7 +2,9 @@
 import Form from "@/components/Forms/Form";
 import FormInput from "@/components/Forms/FormInput";
 import { useUserLoginMutation } from "@/redux/api/authApi";
+import { loginSchema } from "@/schemas/login";
 import { storeUserInfo } from "@/services/auth.service";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { Button, Col, Row, message } from "antd";
 import Image from "next/image";
 import Link from "next/link";
@@ -51,13 +53,14 @@ const LoginPage = () => {
           First login your account
         </h2>
         <div>
-          <Form submitHandler={onSubmit}>
+          <Form submitHandler={onSubmit} resolver={yupResolver(loginSchema)}>
             <div>
               <FormInput
                 name="email"
                 type="email"
                 size="large"
                 label="User Email"
+                required
               />
             </div>
             <div
@@ -70,6 +73,7 @@ const LoginPage = () => {
                 type="password"
                 size="large"
                 label="User Password"
+                required
               />
             </div>
             <Button type="primary" htmlType="submit">
