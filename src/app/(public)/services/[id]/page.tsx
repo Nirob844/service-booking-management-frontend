@@ -1,20 +1,47 @@
 "use client";
+import Loading from "@/app/loading";
 import BookingModal from "@/components/ui/BookingModal";
 import { useAddBookingMutation } from "@/redux/api/bookingApi";
+import {
+  useAddReviewAndRatingMutation,
+  useReviewAndRatingServiceIdQuery,
+} from "@/redux/api/reviewRatingApi";
 import { useServiceQuery } from "@/redux/api/serviceApi";
-import { Button, Card, Image, Spin, Tag, Typography, message } from "antd";
+import { getUserInfo } from "@/services/auth.service";
+import {
+  Button,
+  Card,
+  Image,
+  List,
+  Rate,
+  Spin,
+  Tag,
+  Typography,
+  message,
+} from "antd";
+import TextArea from "antd/es/input/TextArea";
 import { useState } from "react";
 
 const { Title, Paragraph } = Typography;
 
 const ServiceDetailsPage = ({ params }: any) => {
   const { id } = params;
-  const { data, isLoading } = useServiceQuery(id);
 
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [bookingDate, setBookingDate] = useState(null);
+  const [rating, setRating] = useState(0);
+  const [review, setReview] = useState("");
 
+  const { data, isLoading } = useServiceQuery(id);
   const [addBooking] = useAddBookingMutation();
+  const [addReviewAndRating] = useAddReviewAndRatingMutation();
+
+  const { data: reviewsAndRatings, isLoading: reviewLoading } =
+    useReviewAndRatingServiceIdQuery(id);
+
+  if (reviewLoading) {
+    return <Loading />;
+  }
 
   const handleBooking = () => {
     setIsModalVisible(true);
@@ -58,15 +85,52 @@ const ServiceDetailsPage = ({ params }: any) => {
   };
 
   if (isLoading) {
-    return <Spin spinning={true}>Loading...</Spin>;
+    return <Loading />;
   }
 
   const service = data;
-  console.log(service);
 
   if (!service) {
     return null; // Service not found
   }
+
+  const handleRatingChange = (value: number) => {
+    console.log(value);
+    setRating(value);
+  };
+
+  const handleReviewChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    console.log(e.target.value);
+    setReview(e.target.value);
+  };
+
+  const handleReviewSubmit = async () => {
+    try {
+      if (!review || rating === 0) {
+        message.error("Please provide a review and rating.");
+        return;
+      }
+
+      const { userId } = getUserInfo() as any; // Replace with actual userId
+
+      const res = await addReviewAndRating({
+        review,
+        rating,
+        userId,
+        serviceId: id,
+      }).unwrap();
+
+      if (res.id) {
+        message.success("Review and rating submitted successfully.");
+
+        // Clear the review and rating inputs
+        setReview("");
+        setRating(0);
+      }
+    } catch (err: any) {
+      message.error(err.message);
+    }
+  };
 
   return (
     <div
@@ -102,17 +166,77 @@ const ServiceDetailsPage = ({ params }: any) => {
                   {service?.category ? service?.category?.title : "N/A"}
                 </Paragraph>
                 <Paragraph>{service?.description}</Paragraph>
-                <Button type="primary" onClick={handleBooking}>
-                  Booking
-                </Button>
-                <BookingModal
-                  title="Booking Model"
-                  visible={isModalVisible}
-                  onOk={handleOk}
-                  onCancel={handleCancel}
-                  setBookingDate={handleDateChange}
-                />
+                <div className="flex">
+                  <div>
+                    <Button type="primary" onClick={handleBooking}>
+                      Booking
+                    </Button>
+                    <BookingModal
+                      title="Booking Model"
+                      visible={isModalVisible}
+                      onOk={handleOk}
+                      onCancel={handleCancel}
+                      setBookingDate={handleDateChange}
+                    />
+                  </div>
+                  <div className="ml-3">
+                    <Button>Add to Card</Button>
+                  </div>
+                </div>
               </div>
+            </div>
+            <div>
+              <span>Rate this service:</span>
+              <Rate value={rating} onChange={handleRatingChange} />
+            </div>
+
+            {/* Review */}
+            <div style={{ marginTop: "10px" }}>
+              <TextArea
+                rows={4}
+                placeholder="Write a review"
+                value={review}
+                onChange={handleReviewChange}
+              />
+            </div>
+
+            {/* Submit Review button */}
+            <Button
+              className="mt-2"
+              type="primary"
+              onClick={handleReviewSubmit}
+            >
+              Submit Review
+            </Button>
+
+            {/* Display reviews and ratings */}
+            <div style={{ marginTop: "20px" }}>
+              <List
+                itemLayout="horizontal"
+                dataSource={reviewsAndRatings}
+                renderItem={(item: any) => (
+                  <List.Item>
+                    <List.Item.Meta
+                      title={<span>{item.review}</span>}
+                      description={
+                        <div>
+                          <Rate value={item.rating} disabled />
+                          <span> - {item.createdAt}</span>
+                          <p>Service: {item.service.title}</p>
+                          <p>Description: {item.service.description}</p>
+                          <p>Price: ${item.service.price}</p>
+                          <p>
+                            Availability:{" "}
+                            {item.service.availability
+                              ? "Available"
+                              : "Not Available"}
+                          </p>
+                        </div>
+                      }
+                    />
+                  </List.Item>
+                )}
+              />
             </div>
           </Card>
         )}
