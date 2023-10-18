@@ -1,17 +1,15 @@
-import Banner from "@/components/ui/Banner";
 import FooterComponent from "@/components/ui/Footer";
 import PublicHeader from "@/components/view/PublicHeader";
+import HomePage from "./(public)/home/page";
 
-const HomePage = () => {
+const RootPage = () => {
   return (
     <div>
       <PublicHeader />
-      <div className="min-h-[calc(100vh-64px)]">
-        <Banner />
-      </div>
+      <HomePage />
       <FooterComponent />
     </div>
   );
 };
 
-export default HomePage;
+export default RootPage;
