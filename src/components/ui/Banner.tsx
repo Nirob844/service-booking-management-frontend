@@ -19,7 +19,7 @@ const contentStyle: React.CSSProperties = {
 const images = [img1, img2, img3, img4, img5, img6];
 
 const Banner: React.FC = () => (
-  <div className="m-5 rounded-lg">
+  <div className="mx-5 my-2 rounded-lg">
     <Carousel autoplay>
       {images.map((image, index) => (
         <div key={index}>

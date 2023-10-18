@@ -22,8 +22,6 @@ const CreateCategoryPage = () => {
         formData
       );
       const imageUrl = response.data.data.url;
-
-      // Add the image URL to the data object
       data.image = imageUrl;
       console.log(data);
       const res = await addCategory({ ...data }).unwrap();

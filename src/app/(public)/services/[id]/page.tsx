@@ -97,12 +97,10 @@ const ServiceDetailsPage = ({ params }: any) => {
   }
 
   const handleRatingChange = (value: number) => {
-    console.log(value);
     setRating(value);
   };
 
   const handleReviewChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    console.log(e.target.value);
     setReview(e.target.value);
   };
 

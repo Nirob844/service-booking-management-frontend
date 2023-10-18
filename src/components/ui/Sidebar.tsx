@@ -32,6 +32,7 @@ const Sidebar = () => {
           textAlign: "center",
           fontWeight: "bold",
           marginBottom: "1rem",
+          marginTop: "20px",
         }}
       >
         Service Booking
