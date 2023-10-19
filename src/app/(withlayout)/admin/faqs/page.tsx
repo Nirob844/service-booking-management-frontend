@@ -1,23 +1,16 @@
 "use client";
-import ActionBar from "@/components/ui/ActionBar";
 import UMBreadCrumb from "@/components/ui/BreadCrumb";
 import UMTable from "@/components/ui/Table";
 import UMModal from "@/components/ui/UMModal";
-import {
-  useDeleteServiceMutation,
-  useServicesQuery,
-} from "@/redux/api/serviceApi";
+import { useDeleteCategoryMutation } from "@/redux/api/categoryApi";
+import { useFaqsQuery } from "@/redux/api/faqApi";
 import { useDebounced } from "@/redux/hooks";
-import {
-  DeleteOutlined,
-  EditOutlined,
-  ReloadOutlined,
-} from "@ant-design/icons";
-import { Button, Input, message } from "antd";
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import { Button, message } from "antd";
 import dayjs from "dayjs";
 import Link from "next/link";
 import { useState } from "react";
-const ServicesPage = () => {
+const CategoriesPage = () => {
   const query: Record<string, any> = {};
 
   const [page, setPage] = useState<number>(1);
@@ -41,18 +34,18 @@ const ServicesPage = () => {
   if (!!debouncedSearchTerm) {
     query["searchTerm"] = debouncedSearchTerm;
   }
-  const { data, isLoading } = useServicesQuery({ ...query });
+  const { data, isLoading } = useFaqsQuery({
+    ...query,
+  });
+  console.log(data);
 
-  const services = data?.services;
-  const meta = data?.meta;
-
-  const [deleteService] = useDeleteServiceMutation();
+  const [deleteCategory] = useDeleteCategoryMutation();
   const deleteHandler = async (id: string) => {
     message.loading("Deleting.....");
     try {
-      const res = await deleteService(id);
+      const res = await deleteCategory(id);
       if (!!res) {
-        message.success("Service delete successfully");
+        message.success("Category delete successfully");
         setOpen(false);
       }
     } catch (err: any) {
@@ -63,20 +56,12 @@ const ServicesPage = () => {
 
   const columns = [
     {
-      title: "Title",
-      dataIndex: "title",
-    },
-    // {
-    //   title: "Availability",
-    //   dataIndex: "availability",
-    // },
-    {
-      title: "Price",
-      dataIndex: "price",
+      title: "Question",
+      dataIndex: "question",
     },
     {
-      title: "Status",
-      dataIndex: "status",
+      title: "Answer",
+      dataIndex: "answer",
     },
     {
       title: "Created at",
@@ -92,7 +77,7 @@ const ServicesPage = () => {
       render: function (data: any) {
         return (
           <>
-            <Link href={`/admin/services/edit/${data}`}>
+            <Link href={`/admin/faqs/edit/${data}`}>
               <Button
                 style={{
                   margin: "0px 5px",
@@ -149,51 +134,17 @@ const ServicesPage = () => {
         ]}
       />
 
-      <ActionBar title="Service  list">
-        <Input
-          size="large"
-          placeholder="Search"
-          onChange={(e) => setSearchTerm(e.target.value)}
-          style={{
-            width: "20%",
-          }}
-        />
-        <div>
-          <Link href="/admin/services/create">
-            <Button type="primary">Create New</Button>
-          </Link>
-          {(!!sortBy || !!sortOrder || !!searchTerm) && (
-            <Button
-              style={{ margin: "0px 5px" }}
-              type="primary"
-              onClick={resetFilters}
-            >
-              <ReloadOutlined />
-            </Button>
-          )}
-        </div>
-      </ActionBar>
-      <UMTable
-        loading={isLoading}
-        columns={columns}
-        dataSource={services}
-        pageSize={size}
-        totalPages={meta?.total}
-        showSizeChanger={true}
-        onPaginationChange={onPaginationChange}
-        onTableChange={onTableChange}
-        showPagination={true}
-      />
+      <UMTable loading={isLoading} columns={columns} dataSource={data} />
       <UMModal
         title="Remove category"
         isOpen={open}
         closeModal={() => setOpen(false)}
         handleOk={() => deleteHandler(userId)}
       >
-        <p className="my-5">Do you want to remove this service?</p>
+        <p className="my-5">Do you want to remove this faq?</p>
       </UMModal>
     </div>
   );
 };
 
-export default ServicesPage;
+export default CategoriesPage;

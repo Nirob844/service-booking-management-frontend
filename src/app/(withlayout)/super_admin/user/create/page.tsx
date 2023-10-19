@@ -24,12 +24,8 @@ const CreateUserPage = () => {
         formData
       );
       const imageUrl = response.data.data.url;
-
-      // Add the image URL to the data object
       data.image = imageUrl;
-      console.log(data);
       const res = await userRegistration({ ...data }).unwrap();
-      console.log(res);
       if (res.id) {
         message.success("User registration in successfully");
       }

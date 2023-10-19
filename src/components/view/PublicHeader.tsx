@@ -6,6 +6,7 @@ const PublicHeader = () => {
     { key: "2", label: "Services", href: "/services" },
     { key: "4", label: "About Us", href: "/about" },
     { key: "5", label: "Blog", href: "/blogs" },
+    { key: "5", label: "Faq", href: "/faqs" },
     { key: "5", label: "Profile", href: "/profile" },
   ];
   return (

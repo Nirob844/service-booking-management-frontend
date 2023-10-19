@@ -2,7 +2,6 @@
 import Form from "@/components/Forms/Form";
 import FormInput from "@/components/Forms/FormInput";
 import UmBreadCrumb from "@/components/ui/BreadCrumb";
-import UploadImage from "@/components/ui/uploadImage";
 import { useUpdateProfileMutation } from "@/redux/api/profileApi";
 import { useUserQuery } from "@/redux/api/userApi";
 import { getUserInfo } from "@/services/auth.service";
@@ -86,16 +85,6 @@ const EditProfilePage = () => {
                   label="Email"
                   size="large"
                 />
-              </Col>
-
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <UploadImage />
               </Col>
             </Row>
           </div>

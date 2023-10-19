@@ -66,13 +66,17 @@ const ServicesPage = () => {
       title: "Title",
       dataIndex: "title",
     },
-    {
-      title: "Availability",
-      dataIndex: "availability",
-    },
+    // {
+    //   title: "Availability",
+    //   dataIndex: "availability",
+    // },
     {
       title: "Price",
       dataIndex: "price",
+    },
+    {
+      title: "Status",
+      dataIndex: "status",
     },
     {
       title: "Created at",

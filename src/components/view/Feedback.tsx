@@ -52,10 +52,6 @@ const FeedbackForm = () => {
   return (
     <Layout>
       <Content style={{ padding: "50px", textAlign: "center" }}>
-        <h2 className="mb-3">User Feedback</h2>
-        <div className="grid grid-cols-3 gap-x-10 gap-y-10">
-          {recentFeedback}
-        </div>
         <h2 className="my-3">Feedback Form</h2>
         <Form
           onFinish={onFinish}
@@ -74,6 +70,10 @@ const FeedbackForm = () => {
             </Button>
           </Form.Item>
         </Form>
+        <h2 className="mb-3">User Feedback</h2>
+        <div className="grid grid-cols-3 gap-x-10 gap-y-10">
+          {recentFeedback}
+        </div>
       </Content>
     </Layout>
   );

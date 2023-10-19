@@ -6,6 +6,7 @@ import FormSelectField, {
 } from "@/components/Forms/FormSelectField";
 import FormTextArea from "@/components/Forms/FormTextArea";
 import UmBreadCrumb from "@/components/ui/BreadCrumb";
+import { statusOption } from "@/constants/global";
 import { useCategoriesQuery } from "@/redux/api/categoryApi";
 import {
   useServiceQuery,
@@ -44,6 +45,7 @@ const ServiceEditPage = ({ params }: any) => {
   const defaultValues = {
     title: serviceData?.title || "",
     price: serviceData?.price || "",
+    status: serviceData?.status || "",
     categoryId: serviceData?.categoryId || "",
     description: serviceData?.description || "",
   };
@@ -119,6 +121,21 @@ const ServiceEditPage = ({ params }: any) => {
               >
                 <FormSelectField
                   size="large"
+                  name="status"
+                  options={statusOption as SelectOption[]}
+                  label="Status"
+                  placeholder="Select Status"
+                />
+              </Col>
+              <Col
+                className="gutter-row"
+                span={8}
+                style={{
+                  marginBottom: "10px",
+                }}
+              >
+                <FormSelectField
+                  size="large"
                   name="categoryId"
                   options={categoryOptions as SelectOption[]}
                   label="Category"
@@ -133,20 +150,6 @@ const ServiceEditPage = ({ params }: any) => {
                 }}
               >
                 <FormTextArea name="description" label="Description" rows={4} />
-              </Col>
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <FormInput
-                  type="file"
-                  name="image"
-                  label="Image"
-                  size="large"
-                />
               </Col>
             </Row>
           </div>

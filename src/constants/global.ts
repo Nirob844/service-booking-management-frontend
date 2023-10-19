@@ -37,6 +37,16 @@ export const bookingOption = [
     value: "Cancelled",
   },
 ];
+export const statusOption = [
+  {
+    label: "UpComing",
+    value: "upcoming",
+  },
+  {
+    label: "In Progress",
+    value: "inProgress",
+  },
+];
 export const bloodGroupOptions = [
   {
     label: "A+",

@@ -5,13 +5,12 @@ import { useServicesQuery } from "@/redux/api/serviceApi";
 
 const UpcomingServicePage = () => {
   const { data, isLoading } = useServicesQuery({
-    limit: 3,
     sortOrder: "desc",
   });
 
-  const upcomingServices = data?.services?.filter(
-    (service) => service.status === "upcoming"
-  );
+  const upcomingServices = data?.services
+    ?.filter((service) => service.status === "upcoming")
+    .slice(0, 3);
 
   return (
     <div className="m-10">
