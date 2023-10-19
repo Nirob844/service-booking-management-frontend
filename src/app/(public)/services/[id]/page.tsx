@@ -177,6 +177,7 @@ const ServiceDetailsPage = ({ params }: any) => {
               <div className="m-10">
                 <Title level={3}>{service?.title}</Title>
                 <Paragraph>Price: ${service?.price}</Paragraph>
+                <Paragraph>Status: {service?.status}</Paragraph>
                 <Paragraph>
                   Availability:{" "}
                   <Tag color={service?.availability ? "success" : "error"}>

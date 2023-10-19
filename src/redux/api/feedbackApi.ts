@@ -1,4 +1,3 @@
-import { IMeta } from "@/types";
 import { tagTypes } from "../teg-types";
 import { baseApi } from "./baseApi";
 
@@ -7,17 +6,10 @@ const FEEDBACK_URL = "/feedbacks";
 export const feedbackApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     feedbacks: build.query({
-      query: (arg: Record<string, any>) => {
+      query: () => {
         return {
           url: FEEDBACK_URL,
           method: "GET",
-          params: arg,
-        };
-      },
-      transformResponse: (response: any[], meta: IMeta) => {
-        return {
-          carts: response,
-          meta,
         };
       },
       providesTags: [tagTypes.feedback],

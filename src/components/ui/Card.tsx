@@ -60,7 +60,7 @@ const ServiceCard = ({ service }: any) => {
       hoverable
       style={{
         width: 300,
-        height: "350px",
+        height: "380px",
         borderRadius: 10,
         boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
       }}
@@ -80,6 +80,11 @@ const ServiceCard = ({ service }: any) => {
               Price:
             </Text>{" "}
             ${service.price}
+            <br />
+            <Text strong style={{ textDecoration: "none" }}>
+              Status:
+            </Text>{" "}
+            {service.status}
             <br />
             <Text strong style={{ textDecoration: "none" }}>
               Availability:

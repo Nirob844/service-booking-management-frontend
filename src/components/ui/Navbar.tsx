@@ -5,6 +5,7 @@ import { showSidebarDrawer } from "@/redux/slice/sidebarSlice";
 import { getUserInfo, removeUserInfo } from "@/services/auth.service";
 import { MenuOutlined } from "@ant-design/icons";
 import { Button, Drawer, Layout, Menu, Typography } from "antd";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -123,4 +124,4 @@ const Navbar = ({
   );
 };
 
-export default Navbar;
+export default dynamic(() => Promise.resolve(Navbar), { ssr: false });

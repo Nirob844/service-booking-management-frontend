@@ -1,6 +1,7 @@
 import Banner from "@/components/ui/Banner";
 import FeedbackForm from "@/components/view/Feedback";
 import LatestServicePage from "@/components/view/LatestService";
+import UpcomingServicePage from "@/components/view/UpcomingService";
 import About from "../about/page";
 
 const HomePage = () => {
@@ -8,8 +9,9 @@ const HomePage = () => {
     <div>
       <div className="min-h-[calc(100vh-64px)]">
         <Banner />
-        <About />
         <LatestServicePage />
+        <UpcomingServicePage />
+        <About />
         <FeedbackForm />
       </div>
     </div>
