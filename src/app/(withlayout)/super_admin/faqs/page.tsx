@@ -77,7 +77,7 @@ const CategoriesPage = () => {
       render: function (data: any) {
         return (
           <>
-            <Link href={`/admin/faqs/edit/${data}`}>
+            <Link href={`/super_admin/faqs/edit/${data}`}>
               <Button
                 style={{
                   margin: "0px 5px",
@@ -128,8 +128,8 @@ const CategoriesPage = () => {
       <UMBreadCrumb
         items={[
           {
-            label: "admin",
-            link: "/admin",
+            label: "super_admin",
+            link: "/super_admin",
           },
         ]}
       />
