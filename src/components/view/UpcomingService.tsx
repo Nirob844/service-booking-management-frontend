@@ -4,13 +4,15 @@ import Card from "@/components/ui/Card";
 import { useServicesQuery } from "@/redux/api/serviceApi";
 
 const UpcomingServicePage = () => {
-  const { data, isLoading } = useServicesQuery({
+  const { data: upcomingServices, isLoading } = useServicesQuery({
     sortOrder: "desc",
+    limit: 3,
+    status: "upcoming",
   });
 
-  const upcomingServices = data?.services
-    ?.filter((service) => service.status === "upcoming")
-    .slice(0, 3);
+  // const upcomingServices = data?.services
+  //   ?.filter((service) => service.status === "upcoming")
+  //   .slice(0, 3);
 
   return (
     <div className="m-10">
@@ -23,7 +25,7 @@ const UpcomingServicePage = () => {
             </div>
           ) : (
             <div className="grid grid-cols-3 gap-x-10 gap-y-10">
-              {upcomingServices?.map((service) => {
+              {upcomingServices?.services?.map((service) => {
                 return <Card key={service.id} service={service} />;
               })}
             </div>
