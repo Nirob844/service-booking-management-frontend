@@ -9,9 +9,9 @@ import img5 from "../../../src/assets/images/banner/5.jpg";
 import img6 from "../../../src/assets/images/banner/6.jpg";
 
 const contentStyle: React.CSSProperties = {
-  height: "500px",
+  height: "600px",
   color: "#fff",
-  lineHeight: "500px",
+  lineHeight: "600px",
   textAlign: "center",
   background: "#364d79",
 };
@@ -19,7 +19,7 @@ const contentStyle: React.CSSProperties = {
 const images = [img1, img2, img3, img4, img5, img6];
 
 const Banner: React.FC = () => (
-  <div className="mx-5 my-2 rounded-lg">
+  <div className="  rounded-lg">
     <Carousel autoplay>
       {images.map((image, index) => (
         <div key={index}>

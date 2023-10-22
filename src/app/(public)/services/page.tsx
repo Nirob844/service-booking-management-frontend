@@ -3,27 +3,69 @@ import Loading from "@/app/loading";
 import Card from "@/components/ui/Card";
 import { useCategoriesQuery } from "@/redux/api/categoryApi";
 import { useServicesQuery } from "@/redux/api/serviceApi";
+import { useDebounced } from "@/redux/hooks";
 import { ReloadOutlined } from "@ant-design/icons";
-import { Button, Input, Pagination, Select } from "antd";
+import { Button, Form, Input, Pagination, Select } from "antd";
 import { useState } from "react";
 
 const ServicesPage = () => {
+  const query: Record<string, any> = {};
+  const [form] = Form.useForm();
+
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(10);
   const [sortBy, setSortBy] = useState("");
   const [sortOrder, setSortOrder] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
-  const [open, setOpen] = useState(false);
-  const [userId, setUserId] = useState("");
+  const [categoryId, setCategoryId] = useState<any>({});
   const { Option } = Select;
+
+  query["page"] = page;
+  query["limit"] = size;
+  query["sortBy"] = sortBy;
+  query["sortOrder"] = sortOrder;
+  query["searchTerm"] = searchTerm;
+  query["categoryId"] = categoryId;
+
+  const debouncedTerm = useDebounced({
+    searchQuery: searchTerm,
+    delay: 600,
+  });
+
+  if (!!debouncedTerm) {
+    query["searchTerm"] = debouncedTerm;
+  }
+
+  const { data, isLoading } = useServicesQuery({
+    ...query,
+  });
+  if (isLoading) {
+    <Loading />;
+  }
+
+  const services = data?.services;
+  const meta = data?.meta;
+
+  const { data: categoriesData } = useCategoriesQuery({
+    limit: 100,
+    page: 1,
+  });
+
+  const categories = categoriesData?.categories;
+
+  const categoryOptions = categories?.map((category) => (
+    <Button key={category?.id} size="large">
+      {category?.title}
+    </Button>
+  ));
 
   const handleSearch = (value: any) => {
     setSearchTerm(value);
-    setPage(1); // Reset page when searching
   };
 
   const handleSortByChange = (value: string) => {
-    setSortBy(value);
+    setSortBy("price");
+    setSortOrder(value === "ascend" ? "asc" : "desc");
   };
 
   const handleSortOrderChange = (value: string) => {
@@ -31,7 +73,7 @@ const ServicesPage = () => {
   };
 
   const handleCategoryChange = (categoryId: string) => {
-    // Handle category change
+    setCategoryId(categoryId);
   };
 
   const handlePaginationChange = (current: number) => {
@@ -42,29 +84,14 @@ const ServicesPage = () => {
     setSortBy("");
     setSortOrder("");
     setSearchTerm("");
+    setCategoryId(null); // Set categoryId to null
+    setPage(1); // Reset the page to 1
+    form.setFieldsValue({
+      sortBy: "", // Clear the selected value for Sort By
+      sortOrder: "", // Clear the selected value for Sort Order
+      categoryId: "", // Clear the selected value for Category
+    });
   };
-
-  const { data, isLoading } = useServicesQuery({
-    limit: size,
-    page,
-    sortBy,
-    sortOrder,
-    searchTerm,
-  });
-  const services = data?.services;
-  const meta = data?.meta;
-
-  const { data: categoriesData } = useCategoriesQuery({
-    limit: 100,
-    page: 1,
-  });
-
-  const categories = categoriesData?.categories;
-  const categoryOptions = categories?.map((category) => (
-    <Button key={category?.id} size="large">
-      {category?.title}
-    </Button>
-  ));
 
   return (
     <div className="m-10">
@@ -76,26 +103,28 @@ const ServicesPage = () => {
           onChange={(e) => handleSearch(e.target.value)}
         />
         <Select
-          style={{ width: 200, marginLeft: 16 }}
           placeholder="Sort By"
+          style={{ width: 200, marginLeft: 16 }}
           onChange={handleSortByChange}
+          value={sortBy}
         >
           <Option value="title">Title</Option>
+          <Option value="price">Price</Option>
         </Select>
-
         <Select
-          style={{ width: 120, marginLeft: 16 }}
           placeholder="Sort Order"
+          style={{ width: 120, marginLeft: 16 }}
           onChange={handleSortOrderChange}
+          value={sortOrder}
         >
           <Option value="asc">Ascending</Option>
           <Option value="desc">Descending</Option>
         </Select>
-
         <Select
           style={{ width: 200, marginLeft: 16 }}
           placeholder="Category"
           onChange={handleCategoryChange}
+          value={categoryId}
         >
           {categoryOptions}
         </Select>
@@ -116,7 +145,7 @@ const ServicesPage = () => {
             <Loading />
           </div>
         ) : (
-          <div className="grid grid-cols-3 gap-x-10 gap-y-10">
+          <div className="grid grid-cols-4 gap-x-5 gap-y-5">
             {services?.map((service) => {
               return <Card key={service.id} service={service} />;
             })}

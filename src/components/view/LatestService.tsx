@@ -5,8 +5,9 @@ import { useServicesQuery } from "@/redux/api/serviceApi";
 
 const LatestServicePage = () => {
   const { data, isLoading } = useServicesQuery({
-    limit: 3,
+    limit: 4,
     sortOrder: "desc",
+    status: "inProgress",
   });
   const services = data?.services;
 
@@ -20,7 +21,7 @@ const LatestServicePage = () => {
               <Loading />
             </div>
           ) : (
-            <div className="grid grid-cols-3 gap-x-10 gap-y-10">
+            <div className="grid grid-cols-4 gap-x-5 gap-y-5">
               {services?.map((service) => {
                 return <Card key={service.id} service={service} />;
               })}
