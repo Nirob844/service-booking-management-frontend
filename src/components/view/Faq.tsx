@@ -1,6 +1,8 @@
 "use client";
 import { useAddFaqMutation } from "@/redux/api/faqApi";
-import { Button, Form, Input, Layout, message } from "antd";
+import { Button, Col, Form, Input, Layout, Row, message } from "antd";
+import Image from "next/image";
+import faqImage from "../../assets/images/other/FAQs-pana.png";
 
 const { Content } = Layout;
 
@@ -26,40 +28,35 @@ const FaqForm = () => {
     }
   };
 
-  //   const recentFeedback = data?.slice(0, 3).map((feedback: any) => (
-  //     <div key={feedback.id}>
-  //       <Card title="Feedback" bordered={false}>
-  //         <h3>User Name: {feedback.user.name}</h3>
-  //         <p>Comment: {feedback.comment}</p>
-  //       </Card>
-  //     </div>
-  //   ));
-
   return (
     <Layout>
-      <Content style={{ padding: "50px", textAlign: "center" }}>
-        {/* <h2 className="mb-3">User Feedback</h2>
-        <div className="grid grid-cols-3 gap-x-10 gap-y-10">
-          {recentFeedback}
-        </div> */}
+      <Content style={{ padding: "50px", textAlign: "center", margin: "auto" }}>
         <h2 className="my-3">Any Question</h2>
-        <Form
-          onFinish={onFinish}
-          style={{ maxWidth: "500px", margin: "0 auto" }}
-        >
-          <Form.Item
-            name="question"
-            label="Question"
-            rules={[{ required: true, message: "Please enter your question." }]}
-          >
-            <Input.TextArea rows={5} placeholder="Enter your question" />
-          </Form.Item>
-          <Form.Item>
-            <Button type="primary" htmlType="submit">
-              Submit
-            </Button>
-          </Form.Item>
-        </Form>
+        <Row>
+          <Col sm={12} md={8} lg={8}>
+            <div className="mt-20">
+              <Form onFinish={onFinish} style={{ maxWidth: "500px" }}>
+                <Form.Item
+                  name="question"
+                  label="Question"
+                  rules={[
+                    { required: true, message: "Please enter your question." },
+                  ]}
+                >
+                  <Input.TextArea rows={5} placeholder="Enter your question" />
+                </Form.Item>
+                <Form.Item>
+                  <Button type="primary" htmlType="submit">
+                    Submit
+                  </Button>
+                </Form.Item>
+              </Form>
+            </div>
+          </Col>
+          <Col sm={12} md={16} lg={10}>
+            <Image className="ml-20" src={faqImage} alt="faq" width={500} />
+          </Col>
+        </Row>
       </Content>
     </Layout>
   );
