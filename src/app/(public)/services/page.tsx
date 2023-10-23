@@ -97,20 +97,26 @@ const ServicesPage = () => {
     <div className="m-10">
       <h1 className="mb-2 text-center">All services</h1>
       <div className="flex items-center mb-4">
+        <p>Search....</p>
         <Input.Search
+          style={{
+            width: "40%",
+          }}
           size="large"
           placeholder="Search"
           onChange={(e) => handleSearch(e.target.value)}
         />
+        <p className="ml-3">Sort By</p>
         <Select
           placeholder="Sort By"
-          style={{ width: 200, marginLeft: 16 }}
+          style={{ width: 120, marginLeft: 16 }}
           onChange={handleSortByChange}
           value={sortBy}
         >
           <Option value="title">Title</Option>
           <Option value="price">Price</Option>
         </Select>
+        <p className="ml-3">Sort Order</p>
         <Select
           placeholder="Sort Order"
           style={{ width: 120, marginLeft: 16 }}
@@ -120,6 +126,7 @@ const ServicesPage = () => {
           <Option value="asc">Ascending</Option>
           <Option value="desc">Descending</Option>
         </Select>
+        <p className="ml-3">Category</p>
         <Select
           style={{ width: 200, marginLeft: 16 }}
           placeholder="Category"
@@ -138,8 +145,8 @@ const ServicesPage = () => {
           </Button>
         )}
       </div>
-
-      <div>
+      <hr />
+      <div className="my-5">
         {isLoading ? (
           <div>
             <Loading />
