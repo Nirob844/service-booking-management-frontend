@@ -1,3 +1,4 @@
+import { IMeta } from "@/types";
 import { tagTypes } from "../teg-types";
 import { baseApi } from "./baseApi";
 
@@ -6,10 +7,17 @@ const CONTENT_URL = "/blogs";
 export const contentApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     contents: build.query({
-      query: () => {
+      query: (arg: Record<string, any>) => {
         return {
           url: CONTENT_URL,
           method: "GET",
+          params: arg,
+        };
+      },
+      transformResponse: (response: any[], meta: IMeta) => {
+        return {
+          contents: response,
+          meta,
         };
       },
       providesTags: [tagTypes.category],

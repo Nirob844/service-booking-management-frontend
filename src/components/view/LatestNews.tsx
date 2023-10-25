@@ -4,15 +4,17 @@ import { useContentsQuery } from "@/redux/api/contentApi";
 import { CalendarOutlined } from "@ant-design/icons";
 import { Avatar, Card, Col, Row } from "antd";
 import Meta from "antd/es/card/Meta";
-const BlogCard = () => {
-  const { data, isLoading } = useContentsQuery({});
+
+const LatestNewsPage = () => {
+  const { data, isLoading } = useContentsQuery({ limit: 3, sortOrder: "desc" });
   const blogs = data?.contents;
 
   if (isLoading) {
     return <Loading />;
   }
   return (
-    <div>
+    <div className="m-10">
+      <h1 className="m-10 text-center">Latest Blog</h1>
       <Row
         style={{
           height: "100%",
@@ -29,7 +31,7 @@ const BlogCard = () => {
           >
             <Card
               hoverable
-              style={{ width: 340 }}
+              style={{ width: 340, margin: "10px" }}
               cover={<Avatar shape={"square"} size={340} src={blog?.image} />}
             >
               <p
@@ -64,4 +66,4 @@ const BlogCard = () => {
   );
 };
 
-export default BlogCard;
+export default LatestNewsPage;

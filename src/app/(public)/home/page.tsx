@@ -1,6 +1,7 @@
 import Banner from "@/components/ui/Banner";
 import FaqForm from "@/components/view/Faq";
 import FeedbackForm from "@/components/view/Feedback";
+import LatestNewsPage from "@/components/view/LatestNews";
 import LatestServicePage from "@/components/view/LatestService";
 import UpcomingServicePage from "@/components/view/UpcomingService";
 import About from "../about/page";
@@ -14,6 +15,7 @@ const HomePage = () => {
         <About />
         <UpcomingServicePage />
         <FeedbackForm />
+        <LatestNewsPage />
         <FaqForm />
       </div>
     </div>
