@@ -1,6 +1,7 @@
 # Car Servce Booiking
 
 
+Live Link : https://service-booking-management-forentend-nirob844.vercel.app/
 
 Frontend Github Repository Link : https://github.com/Nirob844/service-booking-management-frontend
 
@@ -9,6 +10,24 @@ Backend Github Repository Link :  https://github.com/Nirob844/service-booking-ma
 
 ## Introduction
 Welcome to **Car Servce Booiking**! This README provides an overview of our application, its technologies, key features, and how to use it effectively.
+
+## Credentials
+To run servie booking management haven successfully, you'll need to set up the following credentials:
+
+#### Super Admin
+
+- email: super_admin@gmail.com
+- password: 123456
+
+#### Admin
+
+- email: admin@gmail.com
+- password: 123456
+
+#### Customer
+
+- email: customer@gmail.com
+- password: 123456
 
 ## Technologies Used
 ### frontend
