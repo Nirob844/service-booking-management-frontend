@@ -15,7 +15,6 @@ const FaqPage: React.FC = () => {
     return <Loading />;
   }
 
-  console.log(faqsData);
   if (faqsData.length === 0) {
     return <p>No FAQ data available.</p>;
   }

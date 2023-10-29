@@ -1,5 +1,7 @@
 "use client";
+import { useAddAddCartMutation } from "@/redux/api/addCartApi";
 import { useAddBookingMutation } from "@/redux/api/bookingApi";
+import { getUserInfo } from "@/services/auth.service";
 import { Button, Card, Tag, Typography, message } from "antd";
 import Link from "next/link";
 import { useState } from "react";
@@ -13,6 +15,7 @@ const ServiceCard = ({ service }: any) => {
   const [bookingDate, setBookingDate] = useState(null);
 
   const [addBooking] = useAddBookingMutation();
+  const [addCart] = useAddAddCartMutation();
 
   const handleBooking = () => {
     setIsModalVisible(true);
@@ -53,6 +56,28 @@ const ServiceCard = ({ service }: any) => {
 
   const handleDateChange = (date: any) => {
     setBookingDate(date); // No need for toDate() here
+  };
+
+  const handleAddToCart = async () => {
+    try {
+      const { userId } = getUserInfo() as any;
+      // Assuming you have a service object. Modify this accordingly.
+      const serviceToAddToCart = {
+        serviceId: service.id,
+        userId: userId, // You can modify this as needed.
+      };
+
+      const res = await addCart(serviceToAddToCart).unwrap();
+
+      if (res.id) {
+        message.success("Service added to cart successfully.");
+      } else {
+        message.error("Failed to add service to cart.");
+      }
+    } catch (err) {
+      console.error("Error adding to cart:", err);
+      message.error("An error occurred while adding to cart.");
+    }
   };
 
   return (
@@ -108,7 +133,10 @@ const ServiceCard = ({ service }: any) => {
             setBookingDate={handleDateChange}
           />
         </div>
-        <div className="ml-3">
+        <div className="mx-1">
+          <Button onClick={handleAddToCart}>Add to Cart</Button>
+        </div>
+        <div>
           <Link key={service.id} href={`services/${service.id}`}>
             <Button>Details</Button>
           </Link>
