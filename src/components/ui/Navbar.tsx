@@ -64,7 +64,7 @@ const Navbar = ({
                 hasSider && "text-center lg:text-left"
               }`}
             >
-              Car Service
+              Car Repairing
             </Title>
           </Link>
         </Content>

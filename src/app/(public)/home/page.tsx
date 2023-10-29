@@ -5,6 +5,7 @@ import LatestNewsPage from "@/components/view/LatestNews";
 import LatestServicePage from "@/components/view/LatestService";
 import UpcomingServicePage from "@/components/view/UpcomingService";
 import About from "../about/page";
+import FaqPage from "../faqs/page";
 
 const HomePage = () => {
   return (
@@ -17,6 +18,7 @@ const HomePage = () => {
         <FeedbackForm />
         <LatestNewsPage />
         <FaqForm />
+        <FaqPage />
       </div>
     </div>
   );
