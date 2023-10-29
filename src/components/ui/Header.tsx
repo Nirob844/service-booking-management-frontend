@@ -1,11 +1,19 @@
+"use client";
 import { authKey } from "@/constants/storageKey";
+import { useProfileQuery } from "@/redux/api/profileApi";
 import { getUserInfo, removeUserInfo } from "@/services/auth.service";
-import { UserOutlined } from "@ant-design/icons";
-import { Avatar, Button, Dropdown, Layout, MenuProps, Row, Space } from "antd";
+import {
+  AppstoreAddOutlined,
+  HomeOutlined,
+  LogoutOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
+import { Avatar, Button, Dropdown, Layout, Menu, Row, Space } from "antd";
 import { useRouter } from "next/navigation";
 const { Header: AntHeader } = Layout;
 
 const Header = () => {
+  const { data, isLoading } = useProfileQuery(undefined);
   const router = useRouter();
 
   const logOut = () => {
@@ -13,44 +21,63 @@ const Header = () => {
     router.push("/login");
   };
 
-  const items: MenuProps["items"] = [
+  const menuItems = [
     {
-      key: "0",
-      label: (
-        <Button onClick={logOut} type="text" danger>
-          Logout
-        </Button>
-      ),
+      key: "home",
+      icon: <HomeOutlined />,
+      text: "Home",
+      onClick: () => {
+        router.push("/home"); // Replace this with your actual home route
+      },
+    },
+    {
+      key: "services",
+      icon: <AppstoreAddOutlined />,
+      text: "Services",
+      onClick: () => {
+        router.push("/services"); // Replace this with your actual services route
+      },
+    },
+    {
+      key: "signOut",
+      icon: <LogoutOutlined />,
+      text: "Sign Out",
+      onClick: logOut,
     },
   ];
+
+  const menu = (
+    <Menu>
+      {menuItems.map((item) => (
+        <Menu.Item key={item.key} icon={item.icon} onClick={item.onClick}>
+          {item.text}
+        </Menu.Item>
+      ))}
+    </Menu>
+  );
+
   const { role } = getUserInfo() as any;
+
   return (
-    <AntHeader
-      style={{
-        background: "#fff",
-      }}
-    >
-      <Row
-        justify="end"
-        align="middle"
-        style={{
-          height: "100%",
-        }}
-      >
-        <p
-          style={{
-            margin: "0px 5px",
-          }}
-        >
-          {role}
-        </p>
-        <Dropdown menu={{ items }}>
-          <p>
-            <Space wrap size={16}>
-              <Avatar size="large" icon={<UserOutlined />} />
-            </Space>
-          </p>
-        </Dropdown>
+    <AntHeader style={{ background: "#fff" }}>
+      <Row justify="end">
+        <Space align="end">
+          {role ? (
+            <Dropdown overlay={menu}>
+              <Space wrap size={16}>
+                {data?.image ? (
+                  <Avatar size="large" src={data.image} />
+                ) : (
+                  <Avatar size="large" icon={<UserOutlined />} />
+                )}
+              </Space>
+            </Dropdown>
+          ) : (
+            <Button type="text" onClick={() => router.push("/login")}>
+              Sign In
+            </Button>
+          )}
+        </Space>
       </Row>
     </AntHeader>
   );
