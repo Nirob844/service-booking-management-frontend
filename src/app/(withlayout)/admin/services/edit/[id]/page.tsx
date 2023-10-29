@@ -6,7 +6,7 @@ import FormSelectField, {
 } from "@/components/Forms/FormSelectField";
 import FormTextArea from "@/components/Forms/FormTextArea";
 import UmBreadCrumb from "@/components/ui/BreadCrumb";
-import { statusOption } from "@/constants/global";
+import { availabilityOption, statusOption } from "@/constants/global";
 import { useCategoriesQuery } from "@/redux/api/categoryApi";
 import {
   useServiceQuery,
@@ -46,6 +46,7 @@ const ServiceEditPage = ({ params }: any) => {
     title: serviceData?.title || "",
     price: serviceData?.price || "",
     status: serviceData?.status || "",
+    availability: serviceData?.availability || true,
     categoryId: serviceData?.categoryId || "",
     description: serviceData?.description || "",
   };
@@ -123,6 +124,21 @@ const ServiceEditPage = ({ params }: any) => {
                   size="large"
                   name="status"
                   options={statusOption as SelectOption[]}
+                  label="Status"
+                  placeholder="Select Status"
+                />
+              </Col>
+              <Col
+                className="gutter-row"
+                span={8}
+                style={{
+                  marginBottom: "10px",
+                }}
+              >
+                <FormSelectField
+                  size="large"
+                  name="availability"
+                  options={availabilityOption as SelectOption[]}
                   label="Status"
                   placeholder="Select Status"
                 />

@@ -47,6 +47,16 @@ export const statusOption = [
     value: "inProgress",
   },
 ];
+export const availabilityOption = [
+  {
+    label: "Available",
+    value: true,
+  },
+  {
+    label: "Not Available",
+    value: false,
+  },
+];
 export const bloodGroupOptions = [
   {
     label: "A+",

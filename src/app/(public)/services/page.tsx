@@ -65,6 +65,7 @@ const ServicesPage = () => {
 
   const handleSortByChange = (value: string) => {
     setSortBy("price");
+    setSortBy("title");
     setSortOrder(value === "ascend" ? "asc" : "desc");
   };
 

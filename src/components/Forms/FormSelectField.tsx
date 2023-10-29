@@ -4,13 +4,13 @@ import { Controller, useFormContext } from "react-hook-form";
 
 export type SelectOption = {
   label: string;
-  value: string;
+  value: string | boolean;
 };
 type SelectFieldProps = {
   options: SelectOption[];
   name: string;
   size?: "large" | "small";
-  value?: string | string[] | undefined;
+  value?: string | string[] | boolean | undefined;
   placeholder?: string;
   label?: string;
   defaultValue?: SelectOption;

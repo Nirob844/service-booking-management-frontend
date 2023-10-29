@@ -66,10 +66,16 @@ const ServicesPage = () => {
       title: "Title",
       dataIndex: "title",
     },
-    // {
-    //   title: "Availability",
-    //   dataIndex: "availability",
-    // },
+    {
+      title: "Availability",
+      dataIndex: "availability",
+      render: (availability: boolean) =>
+        availability ? (
+          <span style={{ color: "green" }}>Available</span>
+        ) : (
+          <span style={{ color: "red" }}>Not Available</span>
+        ),
+    },
     {
       title: "Price",
       dataIndex: "price",
