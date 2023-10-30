@@ -35,7 +35,7 @@ const Sidebar = () => {
           marginTop: "20px",
         }}
       >
-        Service Booking
+        Car Repairing
       </div>
       <Menu
         theme="dark"

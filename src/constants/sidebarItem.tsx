@@ -1,6 +1,8 @@
 import {
   AppstoreOutlined,
+  BookOutlined,
   ProfileOutlined,
+  ShoppingCartOutlined,
   TableOutlined,
 } from "@ant-design/icons";
 import { MenuProps } from "antd";
@@ -27,10 +29,12 @@ export const sidebarItem = (role: string) => {
     {
       label: <Link href={`/${role}/carts`}>Add Cart</Link>,
       key: `/${role}/carts`,
+      icon: <ShoppingCartOutlined />,
     },
     {
       label: <Link href={`/${role}/bookings`}>Booking</Link>,
       key: `/${role}/bookings`,
+      icon: <BookOutlined />,
     },
   ];
 

@@ -3,13 +3,12 @@ import { Layout } from "antd";
 import Header from "./Header";
 
 const { Content } = Layout;
-const base = "admin";
 
 const Contents = ({ children }: { children: React.ReactNode }) => {
   return (
     <Content
       style={{
-        minHeight: "100vh",
+        minHeight: "100%",
         color: "black",
       }}
     >
