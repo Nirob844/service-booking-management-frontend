@@ -23,6 +23,24 @@ export const serviceApi = baseApi.injectEndpoints({
       providesTags: [tagTypes.service],
     }),
 
+    categoryServices: build.query({
+      query: (arg: Record<string, any>) => {
+        return {
+          // @ts-ignore
+          url: `${SERVICE_URL}/${categoryId}/category`,
+          method: "GET",
+          params: arg,
+        };
+      },
+      transformResponse: (response: any, meta: IMeta) => {
+        return {
+          categoriesServices: response,
+          meta,
+        };
+      },
+      providesTags: [tagTypes.service],
+    }),
+
     service: build.query({
       query: (id) => ({
         url: `${SERVICE_URL}/${id}`,
@@ -61,6 +79,7 @@ export const serviceApi = baseApi.injectEndpoints({
 
 export const {
   useServicesQuery,
+  useCategoryServicesQuery,
   useServiceQuery,
   useAddServiceMutation,
   useUpdateServiceMutation,

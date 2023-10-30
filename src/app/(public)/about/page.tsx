@@ -5,7 +5,7 @@ import person from "../../../assets/images/about_us/person.jpg";
 
 const About = () => {
   return (
-    <div className="mx-10 my-20">
+    <div className="mx-10 mt-10 mb-32">
       <div className="flex lg:flex-row">
         <div className="relative w-1/2">
           <Image
@@ -20,7 +20,7 @@ const About = () => {
           />
         </div>
         <div className="w-1/2">
-          <p className="text-2xl font-bold text-orange-600">About Us</p>
+          <p className="text-2xl font-bold text-blue-400">About Us</p>
           <h1 className="my-5 text-5xl font-bold">
             We are qualified <br />
             & of experience <br />

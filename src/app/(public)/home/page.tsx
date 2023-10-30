@@ -5,6 +5,7 @@ import LatestNewsPage from "@/components/view/LatestNews";
 import LatestServicePage from "@/components/view/LatestService";
 import UpcomingServicePage from "@/components/view/UpcomingService";
 import About from "../about/page";
+import CategoryCard from "../categories/page";
 import FaqPage from "../faqs/page";
 
 const HomePage = () => {
@@ -12,11 +13,12 @@ const HomePage = () => {
     <div>
       <div className="min-h-[calc(100vh-64px)]">
         <Banner />
-        <LatestServicePage />
+        <CategoryCard />
         <About />
+        <LatestServicePage />
         <UpcomingServicePage />
-        <FeedbackForm />
         <LatestNewsPage />
+        <FeedbackForm />
         <FaqForm />
         <FaqPage />
       </div>

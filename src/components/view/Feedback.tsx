@@ -45,7 +45,7 @@ const FeedbackForm = () => {
   const recentFeedback = data?.slice(0, 3).map((feedback: any) => (
     <div key={feedback.id}>
       <Card title="Feedback" bordered={false}>
-        <h3>User Name: {feedback.user.name}</h3>
+        <h3>Name: {feedback.user.name}</h3>
         <p>Comment: {feedback.comment}</p>
       </Card>
     </div>
