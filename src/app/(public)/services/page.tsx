@@ -4,8 +4,8 @@ import Card from "@/components/ui/Card";
 import { useCategoriesQuery } from "@/redux/api/categoryApi";
 import { useServicesQuery } from "@/redux/api/serviceApi";
 import { useDebounced } from "@/redux/hooks";
-import { ReloadOutlined } from "@ant-design/icons";
-import { Button, Form, Input, Pagination, Select } from "antd";
+import { FilterOutlined, ReloadOutlined } from "@ant-design/icons";
+import { Button, Form, Input, Pagination, Popover, Select } from "antd";
 import { useState } from "react";
 
 const ServicesPage = () => {
@@ -94,57 +94,70 @@ const ServicesPage = () => {
     });
   };
 
+  const filterButton = (
+    <Popover
+      content={
+        <div style={{ padding: "16px" }}>
+          <Select
+            style={{ width: "100%", margin: "8px 0" }}
+            placeholder="Sort By"
+            onChange={handleSortByChange}
+            value={sortBy}
+          >
+            <Option value="title">Title</Option>
+            <Option value="price">Price</Option>
+          </Select>
+          <Select
+            style={{ width: "100%", margin: "8px 0" }}
+            placeholder="Sort Order"
+            onChange={handleSortOrderChange}
+            value={sortOrder}
+          >
+            <Option value="asc">Ascending</Option>
+            <Option value="desc">Descending</Option>
+          </Select>
+          <Select
+            style={{ width: "100%", margin: "8px 0" }}
+            placeholder="Category"
+            onChange={handleCategoryChange}
+            value={categoryId}
+          >
+            {categoryOptions}
+          </Select>
+          <Button
+            type="primary"
+            style={{ width: "100%", margin: "8px 0" }}
+            onClick={resetFilters}
+          >
+            <ReloadOutlined /> Reset Filters
+          </Button>
+        </div>
+      }
+      title="Filter Options"
+      trigger="click"
+    >
+      <Button
+        type="primary"
+        icon={<FilterOutlined />}
+        style={{ margin: "0 8px" }}
+        size="large"
+      >
+        Filter
+      </Button>
+    </Popover>
+  );
+
   return (
     <div className="m-10">
       <h1 className="mb-2 text-center">All services</h1>
-      <div className="flex items-center mb-4">
-        <p>Search....</p>
+      <div className="flex flex-wrap items-center m-5">
         <Input.Search
-          style={{
-            width: "40%",
-          }}
+          className="w-full sm:w-1/2 md:w-3/4 lg:w-5/6 mb-3 sm:mb-0"
           size="large"
-          placeholder="Search"
+          placeholder="Searching..........."
           onChange={(e) => handleSearch(e.target.value)}
         />
-        <p className="ml-3">Sort By</p>
-        <Select
-          placeholder="Sort By"
-          style={{ width: 120, marginLeft: 16 }}
-          onChange={handleSortByChange}
-          value={sortBy}
-        >
-          <Option value="title">Title</Option>
-          <Option value="price">Price</Option>
-        </Select>
-        <p className="ml-3">Sort Order</p>
-        <Select
-          placeholder="Sort Order"
-          style={{ width: 120, marginLeft: 16 }}
-          onChange={handleSortOrderChange}
-          value={sortOrder}
-        >
-          <Option value="asc">Ascending</Option>
-          <Option value="desc">Descending</Option>
-        </Select>
-        <p className="ml-3">Category</p>
-        <Select
-          style={{ width: 200, marginLeft: 16 }}
-          placeholder="Category"
-          onChange={handleCategoryChange}
-          value={categoryId}
-        >
-          {categoryOptions}
-        </Select>
-        {(!!sortBy || !!sortOrder || !!searchTerm) && (
-          <Button
-            style={{ margin: "0px 5px" }}
-            type="primary"
-            onClick={resetFilters}
-          >
-            <ReloadOutlined />
-          </Button>
-        )}
+        {filterButton}
       </div>
       <hr />
       <div className="my-5">
@@ -153,7 +166,7 @@ const ServicesPage = () => {
             <Loading />
           </div>
         ) : (
-          <div className="grid grid-cols-4 gap-x-5 gap-y-5">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-5 gap-y-5">
             {services?.map((service) => {
               return <Card key={service.id} service={service} />;
             })}
