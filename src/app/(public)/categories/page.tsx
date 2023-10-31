@@ -15,12 +15,13 @@ const CategoryCard = () => {
     <div className="m-10">
       <h1 className="mb-10 text-center">Popular Category</h1>
 
-      <div className="grid grid-cols-6 gap-x-2 gap-y-2">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-x-2 gap-y-2">
         {categories?.map((category) => (
           <Link key={category.id} href={`/categories/${category.id}`}>
             <Card
               hoverable
-              style={{ width: "200px", height: "220px" }}
+              //   style={{ width: "200px", height: "220px" }}
+              className="sm:w-[100px] md:w-[200px]"
               cover={
                 <img
                   style={{ width: "100%", height: "150px" }}

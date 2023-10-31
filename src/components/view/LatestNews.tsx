@@ -6,7 +6,7 @@ import { Avatar, Card, Col, Row } from "antd";
 import Meta from "antd/es/card/Meta";
 
 const LatestNewsPage = () => {
-  const { data, isLoading } = useContentsQuery({ limit: 3, sortOrder: "desc" });
+  const { data, isLoading } = useContentsQuery({ limit: 4, sortOrder: "desc" });
   const blogs = data?.contents;
 
   if (isLoading) {
@@ -14,7 +14,7 @@ const LatestNewsPage = () => {
   }
   return (
     <div className="m-10">
-      <h1 className="m-10 text-center">Latest Blog</h1>
+      <h1 className="mt-5 mb-5 text-center">Latest Blog</h1>
       <Row
         style={{
           height: "100%",
@@ -27,12 +27,15 @@ const LatestNewsPage = () => {
               marginBottom: "20px",
             }}
             key={i}
-            span={8}
+            sm={24} // 2 columns on small screens
+            md={12} // 3 columns on medium screens
+            lg={8} // 4 columns on large screens
+            xl={6}
           >
             <Card
               hoverable
-              style={{ width: 340, margin: "10px" }}
-              cover={<Avatar shape={"square"} size={340} src={blog?.image} />}
+              className="m-3 lg:w-[300px]"
+              cover={<Avatar shape={"square"} size={300} src={blog?.image} />}
             >
               <p
                 style={{

@@ -17,14 +17,14 @@ const UpcomingServicePage = () => {
   return (
     <div className="m-10">
       <div className="">
-        <h1 className="mt-5 mb-2 text-center">Upcoming Service</h1>
+        <h1 className="mt-5 mb-5 text-center">Upcoming Service</h1>
         <div>
           {isLoading ? (
             <div>
               <Loading />
             </div>
           ) : (
-            <div className="grid grid-cols-4 gap-x-5 gap-y-5">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-5 gap-y-5">
               {upcomingServices?.services?.map((service) => {
                 return <Card key={service.id} service={service} />;
               })}

@@ -44,7 +44,7 @@ const FeedbackForm = () => {
 
   const recentFeedback = data?.slice(0, 3).map((feedback: any) => (
     <div key={feedback.id}>
-      <Card title="Feedback" bordered={false}>
+      <Card className="m-10" title="Feedback" bordered={false}>
         <h3>Name: {feedback.user.name}</h3>
         <p>Comment: {feedback.comment}</p>
       </Card>
@@ -55,17 +55,16 @@ const FeedbackForm = () => {
     <Layout>
       <Content
         style={{
-          padding: "50px",
           textAlign: "center",
         }}
       >
         <h2 className="my-3">Feedback Form</h2>
-        <Row>
-          <Col sm={12} md={16} lg={10}>
-            <Image src={feedbackImage} alt="feedback" width={500} />
+        <Row gutter={[16, 16]} justify="center">
+          <Col sm={12} md={12} lg={8}>
+            <Image src={feedbackImage} alt="feedback" width={300} />
           </Col>
-          <Col sm={12} md={8} lg={8}>
-            <div className="ml-20 mt-20">
+          <Col sm={24} md={12} lg={8}>
+            <div className="m-10">
               <Form
                 onFinish={onFinish}
                 style={{ maxWidth: "500px", margin: "0 auto" }}
@@ -89,7 +88,7 @@ const FeedbackForm = () => {
           </Col>
         </Row>
         <h2 className="mb-3">User Feedback</h2>
-        <div className="grid grid-cols-3 gap-x-10 gap-y-10">
+        <div className="grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-x-10 gap-y-10">
           {recentFeedback}
         </div>
       </Content>

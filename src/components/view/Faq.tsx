@@ -30,12 +30,15 @@ const FaqForm = () => {
 
   return (
     <Layout>
-      <Content style={{ padding: "50px", textAlign: "center", margin: "auto" }}>
+      <Content style={{ textAlign: "center" }}>
         <h2 className="my-3">Any Question</h2>
-        <Row>
-          <Col sm={12} md={8} lg={8}>
-            <div className="mt-20">
-              <Form onFinish={onFinish} style={{ maxWidth: "500px" }}>
+        <Row gutter={[16, 16]} justify="center">
+          <Col xs={24} sm={24} md={12} lg={8}>
+            <div className="m-10">
+              <Form
+                onFinish={onFinish}
+                style={{ maxWidth: "500px", margin: "0 auto" }}
+              >
                 <Form.Item
                   name="question"
                   label="Question"
@@ -53,8 +56,8 @@ const FaqForm = () => {
               </Form>
             </div>
           </Col>
-          <Col sm={12} md={16} lg={10}>
-            <Image className="ml-20" src={faqImage} alt="faq" width={500} />
+          <Col xs={24} sm={24} md={12} lg={8}>
+            <Image src={faqImage} alt="faq" width={300} />
           </Col>
         </Row>
       </Content>
