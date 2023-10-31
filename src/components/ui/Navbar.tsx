@@ -1,4 +1,5 @@
 "use client";
+import Loading from "@/app/loading";
 import { authKey } from "@/constants/storageKey";
 import { useProfileQuery } from "@/redux/api/profileApi";
 import { useAppDispatch } from "@/redux/hooks";
@@ -54,20 +55,22 @@ const Navbar = ({
     window.scrollTo(0, 0);
   }, []);
 
-  // Define your menu items for the dropdown
   const logOut = () => {
     removeUserInfo(authKey);
     router.push("/login");
   };
 
-  // Define your menu items for the dropdown
+  if (isLoading) {
+    return <Loading />;
+  }
+
   const menuItems = [
     {
       key: "dashboard",
       icon: <DashboardOutlined />,
       text: "Dashboard",
       onClick: () => {
-        router.push("/profile"); // Replace this with your actual profile route
+        router.push("/profile");
       },
     },
     {
@@ -77,7 +80,7 @@ const Navbar = ({
       onClick: logOut,
     },
   ];
-  // Define the menu for the dropdown
+
   const menu = (
     <Menu>
       {menuItems.map((item) => (
@@ -159,6 +162,23 @@ const Navbar = ({
                 <Link href={item.href}>{item.label}</Link>
               </Menu.Item>
             ))}
+            {role ? (
+              <Menu.Item key="userProfile">
+                <Dropdown overlay={menu}>
+                  <Space wrap size={16}>
+                    {data?.image ? (
+                      <Avatar size="large" src={data.image} />
+                    ) : (
+                      <Avatar size="large" icon={<UserOutlined />} />
+                    )}
+                  </Space>
+                </Dropdown>
+              </Menu.Item>
+            ) : (
+              <Menu.Item key="signIn" onClick={() => router.push("/login")}>
+                Sign In
+              </Menu.Item>
+            )}
           </Menu>
         </Drawer>
       </Header>
