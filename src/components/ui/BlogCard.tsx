@@ -12,7 +12,8 @@ const BlogCard = () => {
     return <Loading />;
   }
   return (
-    <div>
+    <div className="m-10">
+      <h1 className="mt-5 mb-5 text-center">All Blog</h1>
       <Row
         style={{
           height: "100%",
@@ -25,12 +26,15 @@ const BlogCard = () => {
               marginBottom: "20px",
             }}
             key={i}
-            span={8}
+            sm={24} // 2 columns on small screens
+            md={12} // 3 columns on medium screens
+            lg={8} // 4 columns on large screens
+            xl={6}
           >
             <Card
               hoverable
-              style={{ width: 340 }}
-              cover={<Avatar shape={"square"} size={340} src={blog?.image} />}
+              className="m-3 lg:w-[300px]"
+              cover={<Avatar shape={"square"} size={300} src={blog?.image} />}
             >
               <p
                 style={{

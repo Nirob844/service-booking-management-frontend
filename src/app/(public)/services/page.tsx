@@ -98,6 +98,7 @@ const ServicesPage = () => {
     <Popover
       content={
         <div style={{ padding: "16px" }}>
+          <p>Select Sort By</p>
           <Select
             style={{ width: "100%", margin: "8px 0" }}
             placeholder="Sort By"
@@ -107,6 +108,7 @@ const ServicesPage = () => {
             <Option value="title">Title</Option>
             <Option value="price">Price</Option>
           </Select>
+          <p>Select Sort Order</p>
           <Select
             style={{ width: "100%", margin: "8px 0" }}
             placeholder="Sort Order"
@@ -116,6 +118,7 @@ const ServicesPage = () => {
             <Option value="asc">Ascending</Option>
             <Option value="desc">Descending</Option>
           </Select>
+          <p>Select Category</p>
           <Select
             style={{ width: "100%", margin: "8px 0" }}
             placeholder="Category"
