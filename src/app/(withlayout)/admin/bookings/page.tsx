@@ -73,6 +73,13 @@ const CategoriesPage = () => {
       dataIndex: ["user", "name"],
     },
     {
+      title: "Service Image",
+      dataIndex: ["bookingServices", 0, "service", "image"],
+      render: (image: string) => (
+        <img src={image} alt="Service" style={{ width: "50px" }} />
+      ),
+    },
+    {
       title: "Service Title",
       dataIndex: ["bookingServices", 0, "service", "title"],
     },

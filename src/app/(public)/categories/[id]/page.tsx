@@ -1,5 +1,6 @@
 "use client";
 import Loading from "@/app/loading";
+import UmBreadCrumb from "@/components/ui/BreadCrumb";
 import ServiceCard from "@/components/ui/Card";
 import { useCategoryQuery } from "@/redux/api/categoryApi";
 
@@ -14,6 +15,18 @@ const CategoryPage = ({ params }: any) => {
 
   return (
     <div className="m-10">
+      <UmBreadCrumb
+        items={[
+          {
+            label: "Categories",
+            link: "/categories",
+          },
+          {
+            label: "All Services",
+            link: "/services",
+          },
+        ]}
+      />
       <h1 className="mb-5 text-center">Services in this Category</h1>
       <div className="grid grid-cols-4 gap-x-5 gap-y-5">
         {services?.map((service: any) => (

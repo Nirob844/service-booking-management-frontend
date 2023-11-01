@@ -69,6 +69,13 @@ const CategoriesPage = () => {
 
   const columns = [
     {
+      title: "Image",
+      dataIndex: "image", // Use the appropriate dataIndex for the image URL
+      render: (image: string) => (
+        <img src={image} alt="Service" style={{ width: "50px" }} />
+      ),
+    },
+    {
       title: "Title",
       dataIndex: "title",
     },

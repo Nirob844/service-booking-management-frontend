@@ -1,4 +1,5 @@
 "use client";
+import Loading from "@/app/loading";
 import UmBreadCrumb from "@/components/ui/BreadCrumb";
 import { useProfileQuery } from "@/redux/api/profileApi";
 import { getUserInfo } from "@/services/auth.service";
@@ -9,6 +10,9 @@ import Link from "next/link";
 const ProfilePageInfo = () => {
   const { userId, role } = getUserInfo() as any;
   const { data, isLoading } = useProfileQuery(undefined);
+  if (isLoading) {
+    return <Loading />;
+  }
   return (
     <div>
       <UmBreadCrumb
@@ -19,10 +23,10 @@ const ProfilePageInfo = () => {
           },
         ]}
       />
-      <div>
+      <div style={{ margin: "0 auto", maxWidth: "500px" }}>
         <div>
+          <h1>Well come to profile </h1>
           <img className="w-[150px]" src={data?.image} alt=""></img>
-          <h1>well come to back to profile </h1>
           <h3>Name:{data?.name}</h3>
           <h3>Email:{data?.email}</h3>
         </div>

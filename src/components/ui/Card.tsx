@@ -86,8 +86,6 @@ const ServiceCard = ({ service }: any) => {
       style={{
         width: 300,
         height: "380px",
-        borderRadius: 10,
-        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
       }}
       cover={
         <img

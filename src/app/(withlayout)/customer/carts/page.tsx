@@ -120,6 +120,13 @@ const AddCartPage = () => {
       dataIndex: ["user", "name"],
     },
     {
+      title: "Service Image",
+      dataIndex: ["service", "image"],
+      render: (image: string) => (
+        <img src={image} alt="Service" style={{ width: "50px" }} />
+      ),
+    },
+    {
       title: "Service Title",
       dataIndex: ["service", "title"],
     },

@@ -1,5 +1,6 @@
 "use client";
 import Loading from "@/app/loading";
+import UmBreadCrumb from "@/components/ui/BreadCrumb";
 import Card from "@/components/ui/Card";
 import { useCategoriesQuery } from "@/redux/api/categoryApi";
 import { useServicesQuery } from "@/redux/api/serviceApi";
@@ -208,6 +209,14 @@ const ServicesPage = () => {
 
   return (
     <div className="m-10">
+      <UmBreadCrumb
+        items={[
+          {
+            label: "Home",
+            link: "/",
+          },
+        ]}
+      />
       <h1 className="mb-2 text-center">All services</h1>
       <div className="flex flex-wrap items-center m-5">
         <Input.Search

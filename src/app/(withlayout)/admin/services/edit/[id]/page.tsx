@@ -47,6 +47,7 @@ const ServiceEditPage = ({ params }: any) => {
           data.image = imageUrl;
         }
       }
+      data.price = parseInt(data.price);
       const res = await updateService({ id: params?.id, body: data }).unwrap();
       console.log(res);
       if (res.id) {

@@ -63,13 +63,26 @@ const ServicesPage = () => {
 
   const columns = [
     {
+      title: "Image",
+      dataIndex: "image", // Use the appropriate dataIndex for the image URL
+      render: (image: string) => (
+        <img src={image} alt="Service" style={{ width: "50px" }} />
+      ),
+    },
+    {
       title: "Title",
       dataIndex: "title",
     },
-    // {
-    //   title: "Availability",
-    //   dataIndex: "availability",
-    // },
+    {
+      title: "Availability",
+      dataIndex: "availability",
+      render: (availability: boolean) =>
+        availability ? (
+          <span style={{ color: "green" }}>Available</span>
+        ) : (
+          <span style={{ color: "red" }}>Not Available</span>
+        ),
+    },
     {
       title: "Price",
       dataIndex: "price",

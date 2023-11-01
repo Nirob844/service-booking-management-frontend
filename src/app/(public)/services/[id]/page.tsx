@@ -1,6 +1,7 @@
 "use client";
 import Loading from "@/app/loading";
 import BookingModal from "@/components/ui/BookingModal";
+import UmBreadCrumb from "@/components/ui/BreadCrumb";
 import { useAddAddCartMutation } from "@/redux/api/addCartApi";
 import { useAddBookingMutation } from "@/redux/api/bookingApi";
 import {
@@ -154,115 +155,127 @@ const ServiceDetailsPage = ({ params }: any) => {
   };
 
   return (
-    <div
-      style={{
-        marginTop: "30px",
-        padding: "20px",
-        display: "flex",
-        justifyContent: "center",
-      }}
-    >
-      <Spin spinning={isLoading}>
-        {service && (
-          <Card>
-            <div className="flex">
-              <div className="w-1/2">
-                <Image
-                  src={service.image}
-                  alt="Service Image"
-                  style={{ maxWidth: "500px", maxHeight: "500px" }}
-                />
-              </div>
-              <div className="m-10">
-                <Title level={3}>{service?.title}</Title>
-                <Paragraph>Price: ${service?.price}</Paragraph>
-                <Paragraph>Status: {service?.status}</Paragraph>
-                <Paragraph>
-                  Availability:{" "}
-                  <Tag color={service?.availability ? "success" : "error"}>
-                    {service?.availability ? "Available" : "Not Available"}
-                  </Tag>
-                </Paragraph>
-                <Paragraph>
-                  Category:{" "}
-                  {service?.category ? service?.category?.title : "N/A"}
-                </Paragraph>
-                <Paragraph>{service?.description}</Paragraph>
-                <div className="flex">
-                  <div>
-                    <Button type="primary" onClick={handleBooking}>
-                      Booking
-                    </Button>
-                    <BookingModal
-                      title="Booking Model"
-                      visible={isModalVisible}
-                      onOk={handleOk}
-                      onCancel={handleCancel}
-                      setBookingDate={handleDateChange}
-                    />
-                  </div>
-                  <div className="ml-3">
-                    <Button onClick={handleAddToCart}>Add to Cart</Button>
+    <div>
+      <div className="mt-5 ml-5">
+        <UmBreadCrumb
+          items={[
+            {
+              label: "Services",
+              link: "/services",
+            },
+          ]}
+        />
+      </div>
+      <div
+        style={{
+          marginTop: "30px",
+          padding: "20px",
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        <Spin spinning={isLoading}>
+          {service && (
+            <Card>
+              <div className="flex">
+                <div className="w-1/2">
+                  <Image
+                    src={service.image}
+                    alt="Service Image"
+                    style={{ maxWidth: "500px", maxHeight: "500px" }}
+                  />
+                </div>
+                <div className="m-10">
+                  <Title level={3}>{service?.title}</Title>
+                  <Paragraph>Price: ${service?.price}</Paragraph>
+                  <Paragraph>Status: {service?.status}</Paragraph>
+                  <Paragraph>
+                    Availability:{" "}
+                    <Tag color={service?.availability ? "success" : "error"}>
+                      {service?.availability ? "Available" : "Not Available"}
+                    </Tag>
+                  </Paragraph>
+                  <Paragraph>
+                    Category:{" "}
+                    {service?.category ? service?.category?.title : "N/A"}
+                  </Paragraph>
+                  <Paragraph>{service?.description}</Paragraph>
+                  <div className="flex">
+                    <div>
+                      <Button type="primary" onClick={handleBooking}>
+                        Booking
+                      </Button>
+                      <BookingModal
+                        title="Booking Model"
+                        visible={isModalVisible}
+                        onOk={handleOk}
+                        onCancel={handleCancel}
+                        setBookingDate={handleDateChange}
+                      />
+                    </div>
+                    <div className="ml-3">
+                      <Button onClick={handleAddToCart}>Add to Cart</Button>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div>
-              <span>Rate this service:</span>
-              <Rate value={rating} onChange={handleRatingChange} />
-            </div>
+              <div>
+                <span>Rate this service:</span>
+                <Rate value={rating} onChange={handleRatingChange} />
+              </div>
 
-            {/* Review */}
-            <div style={{ marginTop: "10px" }}>
-              <TextArea
-                rows={4}
-                placeholder="Write a review"
-                value={review}
-                onChange={handleReviewChange}
-              />
-            </div>
+              {/* Review */}
+              <div style={{ marginTop: "10px" }}>
+                <TextArea
+                  rows={4}
+                  placeholder="Write a review"
+                  value={review}
+                  onChange={handleReviewChange}
+                />
+              </div>
 
-            {/* Submit Review button */}
-            <Button
-              className="mt-2"
-              type="primary"
-              onClick={handleReviewSubmit}
-            >
-              Submit Review
-            </Button>
+              {/* Submit Review button */}
+              <Button
+                className="mt-2"
+                type="primary"
+                onClick={handleReviewSubmit}
+              >
+                Submit Review
+              </Button>
 
-            {/* Display reviews and ratings */}
-            <div style={{ marginTop: "20px" }}>
-              <List
-                itemLayout="horizontal"
-                dataSource={reviewsAndRatings}
-                renderItem={(item: any) => (
-                  <List.Item>
-                    <List.Item.Meta
-                      title={<span>{item.review}</span>}
-                      description={
-                        <div>
-                          <Rate value={item.rating} disabled />
-                          <span> - {item.createdAt}</span>
-                          <p>Service: {item.service.title}</p>
-                          <p>Description: {item.service.description}</p>
-                          <p>Price: ${item.service.price}</p>
-                          <p>
-                            Availability:{" "}
-                            {item.service.availability
-                              ? "Available"
-                              : "Not Available"}
-                          </p>
-                        </div>
-                      }
-                    />
-                  </List.Item>
-                )}
-              />
-            </div>
-          </Card>
-        )}
-      </Spin>
+              {/* Display reviews and ratings */}
+              <div style={{ marginTop: "20px" }}>
+                <List
+                  itemLayout="horizontal"
+                  dataSource={reviewsAndRatings}
+                  renderItem={(item: any) => (
+                    <List.Item>
+                      <List.Item.Meta
+                        title={<span>{item.review}</span>}
+                        description={
+                          <div>
+                            <Rate value={item.rating} disabled />
+                            <span> - {item.createdAt}</span>
+                            <p>Service: {item.service.title}</p>
+                            <p>Description: {item.service.description}</p>
+                            <p>Price: ${item.service.price}</p>
+                            <p>
+                              Availability:{" "}
+                              {item.service.availability
+                                ? "Available"
+                                : "Not Available"}
+                            </p>
+                          </div>
+                        }
+                      />
+                    </List.Item>
+                  )}
+                />
+              </div>
+            </Card>
+          )}
+        </Spin>
+      </div>
     </div>
   );
 };

@@ -42,9 +42,9 @@ const FeedbackForm = () => {
     }
   };
 
-  const recentFeedback = data?.slice(0, 3).map((feedback: any) => (
+  const recentFeedback = data?.slice(0, 4).map((feedback: any) => (
     <div key={feedback.id}>
-      <Card className="m-10" title="Feedback" bordered={false}>
+      <Card hoverable className="m-10">
         <h3>Name: {feedback.user.name}</h3>
         <p>Comment: {feedback.comment}</p>
       </Card>
@@ -88,7 +88,7 @@ const FeedbackForm = () => {
           </Col>
         </Row>
         <h2 className="mb-3">User Feedback</h2>
-        <div className="grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-x-10 gap-y-10">
+        <div className="grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-x-5 gap-y-5">
           {recentFeedback}
         </div>
       </Content>
