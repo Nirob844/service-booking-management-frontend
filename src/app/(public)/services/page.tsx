@@ -4,7 +4,11 @@ import Card from "@/components/ui/Card";
 import { useCategoriesQuery } from "@/redux/api/categoryApi";
 import { useServicesQuery } from "@/redux/api/serviceApi";
 import { useDebounced } from "@/redux/hooks";
-import { FilterOutlined, ReloadOutlined } from "@ant-design/icons";
+import {
+  CloseCircleOutlined,
+  FilterOutlined,
+  ReloadOutlined,
+} from "@ant-design/icons";
 import { Button, Form, Input, Pagination, Popover, Select } from "antd";
 import { useState } from "react";
 
@@ -18,12 +22,17 @@ const ServicesPage = () => {
   const [sortOrder, setSortOrder] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [categoryId, setCategoryId] = useState<any>({});
+  const [minPrice, setMinPrice] = useState<number>();
+  const [maxPrice, setMaxPrice] = useState<number>();
+  const [visible, setVisible] = useState(false);
   const { Option } = Select;
 
   query["page"] = page;
   query["limit"] = size;
   query["sortBy"] = sortBy;
   query["sortOrder"] = sortOrder;
+  query["minPrice"] = minPrice;
+  query["maxPrice"] = maxPrice;
   query["searchTerm"] = searchTerm;
   query["categoryId"] = categoryId;
 
@@ -81,16 +90,32 @@ const ServicesPage = () => {
     setPage(current);
   };
 
+  const handleMinPriceChange = (value: number) => {
+    setMinPrice(value);
+  };
+
+  const handleMaxPriceChange = (value: number) => {
+    setMaxPrice(value);
+  };
+
+  const handleClose = () => {
+    setVisible(false); // Close the popover
+  };
+
   const resetFilters = () => {
     setSortBy("");
     setSortOrder("");
     setSearchTerm("");
-    setCategoryId(null); // Set categoryId to null
+    setCategoryId(null);
+    setMinPrice(undefined);
+    setMaxPrice(undefined);
     setPage(1); // Reset the page to 1
     form.setFieldsValue({
-      sortBy: "", // Clear the selected value for Sort By
-      sortOrder: "", // Clear the selected value for Sort Order
-      categoryId: "", // Clear the selected value for Category
+      sortBy: "",
+      sortOrder: "",
+      categoryId: "",
+      minPrice: undefined,
+      maxPrice: undefined,
     });
   };
 
@@ -98,6 +123,17 @@ const ServicesPage = () => {
     <Popover
       content={
         <div style={{ padding: "16px" }}>
+          <Button
+            type="default"
+            style={{
+              position: "absolute",
+              top: "10px",
+              right: "10px",
+            }}
+            onClick={handleClose}
+          >
+            <CloseCircleOutlined />
+          </Button>
           <p>Select Sort By</p>
           <Select
             style={{ width: "100%", margin: "8px 0" }}
@@ -127,6 +163,23 @@ const ServicesPage = () => {
           >
             {categoryOptions}
           </Select>
+          <p>Min Price</p>
+          <Input
+            type="number"
+            style={{ width: "100%", margin: "8px 0" }}
+            placeholder="Min Price"
+            onChange={(e) => handleMinPriceChange(+e.target.value)}
+            value={minPrice}
+          />
+
+          <p>Max Price</p>
+          <Input
+            type="number"
+            style={{ width: "100%", margin: "8px 0" }}
+            placeholder="Max Price"
+            onChange={(e) => handleMaxPriceChange(+e.target.value)}
+            value={maxPrice}
+          />
           <Button
             type="primary"
             style={{ width: "100%", margin: "8px 0" }}
@@ -138,12 +191,15 @@ const ServicesPage = () => {
       }
       title="Filter Options"
       trigger="click"
+      visible={visible} // Control the visibility of the popover
+      onVisibleChange={(newVisible) => setVisible(newVisible)} // Update the state when the popover visibility changes
     >
       <Button
         type="primary"
         icon={<FilterOutlined />}
         style={{ margin: "0 8px" }}
         size="large"
+        onClick={() => setVisible(!visible)} // Toggle the visibility of the popover
       >
         Filter
       </Button>
