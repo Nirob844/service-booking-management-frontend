@@ -37,8 +37,6 @@ const CategoriesPage = () => {
   const { data, isLoading } = useFaqsQuery({
     ...query,
   });
-  console.log(data);
-
   const [deleteCategory] = useDeleteCategoryMutation();
   const deleteHandler = async (id: string) => {
     message.loading("Deleting.....");

@@ -12,13 +12,11 @@ const CategoryEditPage = ({ params }: any) => {
   const { data: categoryData, isLoading: loading } = useCategoryQuery(
     params?.id
   );
-  console.log(categoryData);
   const [updateCategory] = useUpdateCategoryMutation();
   const onSubmit = async (data: any) => {
     message.loading("updating........");
     try {
       const res = await updateCategory({ id: params?.id, body: data }).unwrap();
-      console.log(res);
       if (res.id) {
         message.success("Category update in successfully");
       }

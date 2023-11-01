@@ -27,7 +27,6 @@ const CreateServicePage = () => {
 
   const onSubmit = async (data: any) => {
     message.loading("creating.............");
-    console.log(data);
     try {
       const formData = new FormData();
       formData.append("image", data.image[0]);
@@ -42,9 +41,7 @@ const CreateServicePage = () => {
       // Add the image URL to the data object
       data.image = imageUrl;
       data.price = parseInt(data.price);
-      console.log(data);
       const res = await addService({ ...data }).unwrap();
-      console.log(res);
       if (res.id) {
         message.success(" create service in successfully");
       }

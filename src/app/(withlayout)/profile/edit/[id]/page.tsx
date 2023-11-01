@@ -6,6 +6,7 @@ import { useUpdateProfileMutation } from "@/redux/api/profileApi";
 import { useUserQuery } from "@/redux/api/userApi";
 import { getUserInfo } from "@/services/auth.service";
 import { Button, Col, Row, message } from "antd";
+import axios from "axios";
 
 const EditProfilePage = () => {
   const { userId } = getUserInfo() as any;
@@ -14,6 +15,19 @@ const EditProfilePage = () => {
   const onSubmit = async (data: any) => {
     message.loading("updating........");
     try {
+      const formData = new FormData();
+      if (Array.isArray(data.image) && data.image.length > 0) {
+        formData.append("image", data.image[0]);
+        formData.append("key", "48205bb1e9d5edb8bc197ab3a6951a4b"); // Replace with your ImageBB API key
+        const response = await axios.post(
+          "https://api.imgbb.com/1/upload",
+          formData
+        );
+        const imageUrl = response.data.data.url;
+        if (imageUrl) {
+          data.image = imageUrl;
+        }
+      }
       const res = await updateProfile({ body: data }).unwrap();
       console.log(res);
       if (res.id) {
@@ -27,6 +41,7 @@ const EditProfilePage = () => {
   const defaultValues = {
     name: userData?.name || "",
     email: userData?.email || "",
+    // image: userData?.image || null,
   };
 
   return (
@@ -84,6 +99,20 @@ const EditProfilePage = () => {
                   name="email"
                   label="Email"
                   size="large"
+                />
+              </Col>
+              <Col
+                className="gutter-row"
+                span={8}
+                style={{
+                  marginBottom: "10px",
+                }}
+              >
+                <FormInput
+                  name="image"
+                  type="file"
+                  size="large"
+                  label="User Image"
                 />
               </Col>
             </Row>

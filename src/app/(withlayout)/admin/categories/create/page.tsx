@@ -11,11 +11,9 @@ const CreateCategoryPage = () => {
 
   const onSubmit = async (data: any) => {
     message.loading("creating.............");
-    console.log(data);
     try {
       const formData = new FormData();
       formData.append("image", data.image[0]);
-      console.log(formData);
       formData.append("key", "48205bb1e9d5edb8bc197ab3a6951a4b"); // Replace with your ImageBB API key
       const response = await axios.post(
         "https://api.imgbb.com/1/upload",
@@ -23,9 +21,7 @@ const CreateCategoryPage = () => {
       );
       const imageUrl = response.data.data.url;
       data.image = imageUrl;
-      console.log(data);
       const res = await addCategory({ ...data }).unwrap();
-      console.log(res);
       if (res.id) {
         message.success(" create category in successfully");
       }

@@ -15,7 +15,6 @@ const CreateContentPage = () => {
     try {
       const formData = new FormData();
       formData.append("image", data.image[0]);
-      console.log(formData);
       formData.append("key", "48205bb1e9d5edb8bc197ab3a6951a4b"); // Replace with your ImageBB API key
       const response = await axios.post(
         "https://api.imgbb.com/1/upload",
@@ -23,10 +22,7 @@ const CreateContentPage = () => {
       );
       const imageUrl = response.data.data.url;
       data.image = imageUrl;
-      console.log(data);
-      console.log(data);
       const res = await addContent({ ...data }).unwrap();
-      console.log(res);
       if (res.id) {
         message.success(" create content in successfully");
       }

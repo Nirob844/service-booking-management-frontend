@@ -68,7 +68,6 @@ const ServiceDetailsPage = ({ params }: any) => {
       };
 
       const res = await addBooking(bookingData).unwrap();
-      console.log(res);
       if (res.id) {
         message.success("Service booked successfully.");
         setIsModalVisible(false);
