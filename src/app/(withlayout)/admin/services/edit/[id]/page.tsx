@@ -13,6 +13,7 @@ import {
   useUpdateServiceMutation,
 } from "@/redux/api/serviceApi";
 import { Button, Col, Row, message } from "antd";
+import axios from "axios";
 
 const ServiceEditPage = ({ params }: any) => {
   const { data: serviceData, isLoading: loading } = useServiceQuery(params?.id);
@@ -21,6 +22,7 @@ const ServiceEditPage = ({ params }: any) => {
     limit: 100,
     page: 1,
   });
+
   const categories = data?.categories;
   const categoryOptions = categories?.map((category) => {
     return {
@@ -32,6 +34,19 @@ const ServiceEditPage = ({ params }: any) => {
   const onSubmit = async (data: any) => {
     message.loading("updating........");
     try {
+      const formData = new FormData();
+      if (Array.isArray(data.image) && data.image.length > 0) {
+        formData.append("image", data.image[0]);
+        formData.append("key", "48205bb1e9d5edb8bc197ab3a6951a4b"); // Replace with your ImageBB API key
+        const response = await axios.post(
+          "https://api.imgbb.com/1/upload",
+          formData
+        );
+        const imageUrl = response.data.data.url;
+        if (imageUrl) {
+          data.image = imageUrl;
+        }
+      }
       const res = await updateService({ id: params?.id, body: data }).unwrap();
       console.log(res);
       if (res.id) {
@@ -156,6 +171,20 @@ const ServiceEditPage = ({ params }: any) => {
                   options={categoryOptions as SelectOption[]}
                   label="Category"
                   placeholder="Select Category"
+                />
+              </Col>
+              <Col
+                className="gutter-row"
+                span={8}
+                style={{
+                  marginBottom: "10px",
+                }}
+              >
+                <FormInput
+                  name="image"
+                  type="file"
+                  size="large"
+                  label="Image"
                 />
               </Col>
               <Col

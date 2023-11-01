@@ -112,7 +112,7 @@ const EditProfilePage = () => {
                   name="image"
                   type="file"
                   size="large"
-                  label="User Image"
+                  label="Image"
                 />
               </Col>
             </Row>

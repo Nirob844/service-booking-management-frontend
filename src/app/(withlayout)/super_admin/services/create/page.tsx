@@ -1,4 +1,5 @@
 "use client";
+import Loading from "@/app/loading";
 import Form from "@/components/Forms/Form";
 import FormInput from "@/components/Forms/FormInput";
 import FormSelectField, {
@@ -17,6 +18,9 @@ const CreateServicePage = () => {
     limit: 100,
     page: 1,
   });
+  if (isLoading) {
+    return <Loading />;
+  }
   const categories = data?.categories;
   const categoryOptions = categories?.map((category) => {
     return {

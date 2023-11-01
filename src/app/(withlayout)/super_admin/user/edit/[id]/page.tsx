@@ -3,10 +3,10 @@ import Form from "@/components/Forms/Form";
 import FormInput from "@/components/Forms/FormInput";
 import FormSelectField from "@/components/Forms/FormSelectField";
 import UmBreadCrumb from "@/components/ui/BreadCrumb";
-import UploadImage from "@/components/ui/uploadImage";
 import { userOption } from "@/constants/global";
 import { useUpdateUserMutation, useUserQuery } from "@/redux/api/userApi";
 import { Button, Col, Row, message } from "antd";
+import axios from "axios";
 
 const UserEditPage = ({ params }: any) => {
   const { data: userData, isLoading: loading } = useUserQuery(params?.id);
@@ -15,6 +15,19 @@ const UserEditPage = ({ params }: any) => {
   const onSubmit = async (data: any) => {
     message.loading("updating........");
     try {
+      const formData = new FormData();
+      if (Array.isArray(data.image) && data.image.length > 0) {
+        formData.append("image", data.image[0]);
+        formData.append("key", "48205bb1e9d5edb8bc197ab3a6951a4b"); // Replace with your ImageBB API key
+        const response = await axios.post(
+          "https://api.imgbb.com/1/upload",
+          formData
+        );
+        const imageUrl = response.data.data.url;
+        if (imageUrl) {
+          data.image = imageUrl;
+        }
+      }
       const res = await updateUser({ id: params?.id, body: data }).unwrap();
       console.log(res);
       if (res.id) {
@@ -103,7 +116,6 @@ const UserEditPage = ({ params }: any) => {
                   placeholder="Select"
                 />
               </Col>
-
               <Col
                 className="gutter-row"
                 span={8}
@@ -111,7 +123,12 @@ const UserEditPage = ({ params }: any) => {
                   marginBottom: "10px",
                 }}
               >
-                <UploadImage />
+                <FormInput
+                  name="image"
+                  type="file"
+                  size="large"
+                  label="Image"
+                />
               </Col>
             </Row>
           </div>
