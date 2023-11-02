@@ -20,6 +20,10 @@ export const sidebarItem = (role: string) => {
           label: <Link href={`/${role}`}>Account Profile</Link>,
           key: `/${role}/profile`,
         },
+        {
+          label: <Link href={`/${role}/change-password`}>Change Password</Link>,
+          key: `/${role}/change-password`,
+        },
       ],
     },
   ];
