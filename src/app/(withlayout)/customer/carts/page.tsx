@@ -131,6 +131,10 @@ const AddCartPage = () => {
       dataIndex: ["service", "title"],
     },
     {
+      title: "Price",
+      dataIndex: ["service", "price"],
+    },
+    {
       title: "Created at",
       dataIndex: "createdAt",
       render: function (data: any) {

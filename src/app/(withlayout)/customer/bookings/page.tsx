@@ -81,6 +81,10 @@ const CategoriesPage = () => {
       dataIndex: ["bookingServices", 0, "service", "title"],
     },
     {
+      title: "Price",
+      dataIndex: ["bookingServices", 0, "service", "price"],
+    },
+    {
       title: "Status",
       dataIndex: "status",
     },
