@@ -4,6 +4,7 @@ import { useAddBookingMutation } from "@/redux/api/bookingApi";
 import { getUserInfo } from "@/services/auth.service";
 import { Button, Card, Tag, Typography, message } from "antd";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import BookingModal from "./BookingModal";
 
@@ -13,12 +14,19 @@ const { Text } = Typography;
 const ServiceCard = ({ service }: any) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [bookingDate, setBookingDate] = useState(null);
+  const router = useRouter();
 
   const [addBooking] = useAddBookingMutation();
   const [addCart] = useAddAddCartMutation();
 
   const handleBooking = () => {
-    setIsModalVisible(true);
+    const { userId } = getUserInfo() as any; // Replace with actual userId
+    if (!userId) {
+      message.error("please login ");
+      router.push("/login");
+    } else {
+      setIsModalVisible(true);
+    }
   };
 
   const handleOk = async () => {
@@ -61,18 +69,23 @@ const ServiceCard = ({ service }: any) => {
   const handleAddToCart = async () => {
     try {
       const { userId } = getUserInfo() as any;
-      // Assuming you have a service object. Modify this accordingly.
-      const serviceToAddToCart = {
-        serviceId: service.id,
-        userId: userId, // You can modify this as needed.
-      };
-
-      const res = await addCart(serviceToAddToCart).unwrap();
-
-      if (res.id) {
-        message.success("Service added to cart successfully.");
+      if (!userId) {
+        message.error("please login ");
+        router.push("/login");
       } else {
-        message.error("Failed to add service to cart.");
+        // Assuming you have a service object. Modify this accordingly.
+        const serviceToAddToCart = {
+          serviceId: service.id,
+          userId: userId, // You can modify this as needed.
+        };
+
+        const res = await addCart(serviceToAddToCart).unwrap();
+
+        if (res.id) {
+          message.success("Service added to cart successfully.");
+        } else {
+          message.error("Failed to add service to cart.");
+        }
       }
     } catch (err) {
       console.error("Error adding to cart:", err);

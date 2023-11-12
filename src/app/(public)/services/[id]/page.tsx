@@ -22,6 +22,7 @@ import {
   message,
 } from "antd";
 import TextArea from "antd/es/input/TextArea";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const { Title, Paragraph } = Typography;
@@ -33,6 +34,7 @@ const ServiceDetailsPage = ({ params }: any) => {
   const [bookingDate, setBookingDate] = useState(null);
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState("");
+  const router = useRouter();
 
   const { data, isLoading } = useServiceQuery(id);
   const [addBooking] = useAddBookingMutation();
@@ -47,7 +49,13 @@ const ServiceDetailsPage = ({ params }: any) => {
   }
 
   const handleBooking = () => {
-    setIsModalVisible(true);
+    const { userId } = getUserInfo() as any; // Replace with actual userId
+    if (!userId) {
+      message.error("please login ");
+      router.push("/login");
+    } else {
+      setIsModalVisible(true);
+    }
   };
 
   const handleOk = async () => {
@@ -107,18 +115,23 @@ const ServiceDetailsPage = ({ params }: any) => {
   const handleAddToCart = async () => {
     try {
       const { userId } = getUserInfo() as any;
-      // Assuming you have a service object. Modify this accordingly.
-      const serviceToAddToCart = {
-        serviceId: service.id,
-        userId: userId, // You can modify this as needed.
-      };
-
-      const res = await addCart(serviceToAddToCart).unwrap();
-
-      if (res.id) {
-        message.success("Service added to cart successfully.");
+      if (!userId) {
+        message.error("please login ");
+        router.push("/login");
       } else {
-        message.error("Failed to add service to cart.");
+        // Assuming you have a service object. Modify this accordingly.
+        const serviceToAddToCart = {
+          serviceId: service.id,
+          userId: userId, // You can modify this as needed.
+        };
+
+        const res = await addCart(serviceToAddToCart).unwrap();
+
+        if (res.id) {
+          message.success("Service added to cart successfully.");
+        } else {
+          message.error("Failed to add service to cart.");
+        }
       }
     } catch (err) {
       console.error("Error adding to cart:", err);
@@ -134,20 +147,24 @@ const ServiceDetailsPage = ({ params }: any) => {
       }
 
       const { userId } = getUserInfo() as any; // Replace with actual userId
+      if (!userId) {
+        message.error("please login ");
+        router.push("/login");
+      } else {
+        const res = await addReviewAndRating({
+          review,
+          rating,
+          userId,
+          serviceId: id,
+        }).unwrap();
 
-      const res = await addReviewAndRating({
-        review,
-        rating,
-        userId,
-        serviceId: id,
-      }).unwrap();
+        if (res.id) {
+          message.success("Review and rating submitted successfully.");
 
-      if (res.id) {
-        message.success("Review and rating submitted successfully.");
-
-        // Clear the review and rating inputs
-        setReview("");
-        setRating(0);
+          // Clear the review and rating inputs
+          setReview("");
+          setRating(0);
+        }
       }
     } catch (err: any) {
       message.error(err.message);
