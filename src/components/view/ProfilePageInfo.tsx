@@ -1,18 +1,12 @@
 "use client";
-import Loading from "@/app/loading";
 import UmBreadCrumb from "@/components/ui/BreadCrumb";
-import { useProfileQuery } from "@/redux/api/profileApi";
 import { getUserInfo } from "@/services/auth.service";
 import { EditOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 import Link from "next/link";
 
-const ProfilePageInfo = () => {
-  const { userId, role } = getUserInfo() as any;
-  const { data, isLoading } = useProfileQuery(undefined);
-  if (isLoading) {
-    return <Loading />;
-  }
+const ProfilePageInfo = ({ data }: any) => {
+  const { userId } = getUserInfo() as any;
   return (
     <div>
       <UmBreadCrumb

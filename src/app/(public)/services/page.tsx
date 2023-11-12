@@ -73,9 +73,10 @@ const ServicesPage = () => {
     setSearchTerm(value);
   };
 
-  const handleSortByChange = (value: string) => {
-    setSortBy("price");
-    setSortBy("title");
+  const handleSortByChange = (value: any) => {
+    // setSortBy("price");
+    // setSortBy("title");
+    setSortBy(value);
     setSortOrder(value === "ascend" ? "asc" : "desc");
   };
 
