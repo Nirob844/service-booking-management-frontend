@@ -7,6 +7,19 @@ Frontend Github Repository Link : https://github.com/Nirob844/service-booking-ma
 
 Backend Github Repository Link :  https://github.com/Nirob844/service-booking-management-backend
 
+## How to install
+git clone
+
+```
+https://github.com/Nirob844/service-booking-management-frontend.git
+```
+download dependencies
+
+`npm install`
+
+start localhost
+
+`npm run dev`
 
 ## Introduction
 Welcome to **Car Servce Booiking**! This README provides an overview of our application, its technologies, key features, and how to use it effectively.
