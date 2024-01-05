@@ -10,17 +10,22 @@ const CreateCategoryPage = () => {
   const [addCategory] = useAddCategoryMutation();
 
   const onSubmit = async (data: any) => {
+    console.log(data);
     message.loading("creating.............");
     try {
       const formData = new FormData();
-      formData.append("image", data.image[0]);
-      formData.append("key", "48205bb1e9d5edb8bc197ab3a6951a4b"); // Replace with your ImageBB API key
-      const response = await axios.post(
-        "https://api.imgbb.com/1/upload",
-        formData
-      );
-      const imageUrl = response.data.data.url;
-      data.image = imageUrl;
+      if (Array.isArray(data.image) && data.image.length > 0) {
+        formData.append("image", data.image[0]);
+        formData.append("key", "48205bb1e9d5edb8bc197ab3a6951a4b"); // Replace with your ImageBB API key
+        const response = await axios.post(
+          "https://api.imgbb.com/1/upload",
+          formData
+        );
+        const imageUrl = response.data.data.url;
+        if (imageUrl) {
+          data.image = imageUrl;
+        }
+      }
       const res = await addCategory({ ...data }).unwrap();
       if (res.id) {
         message.success(" create category in successfully");
